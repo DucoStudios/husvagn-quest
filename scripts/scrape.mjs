@@ -163,7 +163,7 @@ function escapeHtml(str) {
 
 // newEvents/goneEvents är redan filtrerade till annonser som matchar
 // TARGET_WEEK innan de når hit - se main().
-function buildNotificationHtml(newEvents, goneEvents) {
+export function buildNotificationHtml(newEvents, goneEvents) {
   const newList = newEvents
     .map(
       (e) => `<li style="margin-bottom:10px;">
@@ -195,7 +195,7 @@ function buildNotificationHtml(newEvents, goneEvents) {
   </div>`;
 }
 
-async function sendTomasNotification(newEvents, goneEvents) {
+export async function sendTomasNotification(newEvents, goneEvents) {
   const token = process.env.GHL_PRIVATE_INTEGRATION_TOKEN;
   const contactId = process.env.TOMAS_GHL_CONTACT_ID;
   if (!token || !contactId) {

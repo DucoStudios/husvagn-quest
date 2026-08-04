@@ -67,17 +67,53 @@
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
+    position: relative;
     background: var(--bg);
     background-image:
-      radial-gradient(ellipse at top, rgba(201, 147, 47, 0.12), transparent 60%),
       repeating-linear-gradient(45deg, rgba(0,0,0,0.15) 0 2px, transparent 2px 40px);
     color: var(--ink);
     font-family: "EB Garamond", Georgia, serif;
     min-height: 100vh;
     padding: 2.5rem 1rem 4rem;
+    overflow-x: hidden;
   }
 
-  .wrap { max-width: 880px; margin: 0 auto; }
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::before {
+    background: radial-gradient(ellipse 60% 45% at 50% 0%, rgba(233, 156, 58, 0.22), transparent 65%);
+    animation: flicker-a 3.6s ease-in-out infinite;
+  }
+  body::after {
+    background: radial-gradient(ellipse 45% 35% at 50% 8%, rgba(255, 120, 40, 0.16), transparent 60%);
+    animation: flicker-b 2.3s ease-in-out infinite;
+  }
+  @keyframes flicker-a {
+    0%, 100% { opacity: 0.75; transform: scale(1); }
+    18% { opacity: 0.55; transform: scale(0.98); }
+    34% { opacity: 0.95; transform: scale(1.03); }
+    52% { opacity: 0.6; transform: scale(1); }
+    68% { opacity: 1; transform: scale(1.02); }
+    83% { opacity: 0.7; transform: scale(0.99); }
+  }
+  @keyframes flicker-b {
+    0%, 100% { opacity: 0.5; }
+    25% { opacity: 0.85; }
+    45% { opacity: 0.4; }
+    60% { opacity: 0.9; }
+    80% { opacity: 0.55; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body::before, body::after { animation: none; }
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; position: relative; z-index: 1; }
 
   header {
     text-align: center;
@@ -333,10 +369,11 @@ function updateCountdown() {
   const days = Math.floor(msLeft / (24 * 60 * 60 * 1000));
   const hours = Math.floor((msLeft % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
   const minutes = Math.floor((msLeft % (60 * 60 * 1000)) / (60 * 1000));
-  valueEl.textContent = `${days}d ${hours}t ${minutes}m`;
+  const seconds = Math.floor((msLeft % (60 * 1000)) / 1000);
+  valueEl.textContent = `${days}d ${hours}t ${minutes}m ${seconds}s`;
 }
 updateCountdown();
-setInterval(updateCountdown, 60 * 1000);
+setInterval(updateCountdown, 1000);
 
 async function load() {
   const board = document.getElementById("board");

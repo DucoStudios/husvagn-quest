@@ -13,8 +13,10 @@ const USER_AGENT =
   "HusvagnQuestBot/1.0 (personligt notistjänst, kontakt: david.bergqvist@gmail.com)";
 const DATA_FILE = new URL("../data.json", import.meta.url);
 const FEED_FILE = new URL("../feed.xml", import.meta.url);
+const LOG_FILE = new URL("../scrapelog.json", import.meta.url);
 const MAX_PAGES = 6;
 const MAX_FEED_ITEMS = 60;
+const LOG_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 
 const SWEDISH_MONTHS = {
   januari: 0, februari: 1, mars: 2, april: 3, maj: 4, juni: 5,
@@ -105,6 +107,22 @@ async function loadState() {
 
 function toRFC822(isoString) {
   return new Date(isoString).toUTCString();
+}
+
+// Logg över varje enskild skrapning (inte bara ändringar), sparas 30 dagar bakåt.
+async function appendScrapeLog(entry) {
+  let log = [];
+  if (existsSync(LOG_FILE)) {
+    try {
+      log = JSON.parse(await readFile(LOG_FILE, "utf8"));
+    } catch {
+      log = [];
+    }
+  }
+  const cutoff = Date.now() - LOG_RETENTION_MS;
+  log = log.filter((e) => new Date(e.at).getTime() >= cutoff);
+  log.push(entry);
+  await writeFile(LOG_FILE, JSON.stringify(log, null, 2) + "\n", "utf8");
 }
 
 function escapeXml(str) {
@@ -285,9 +303,21 @@ async function main() {
   // sådana träffar, så en notis om övriga skulle bara vara brus för Tomas.
   const weekMatchNewEvents = newFeedEvents.filter((e) => matchesWeek(e.title, TARGET_WEEK));
   const weekMatchGoneEvents = goneFeedEvents.filter((e) => matchesWeek(e.title, TARGET_WEEK));
-  if (!isBootstrap && (weekMatchNewEvents.length > 0 || weekMatchGoneEvents.length > 0)) {
+  const notified = !isBootstrap && (weekMatchNewEvents.length > 0 || weekMatchGoneEvents.length > 0);
+  if (notified) {
     await sendTomasNotification(weekMatchNewEvents, weekMatchGoneEvents);
   }
+
+  await appendScrapeLog({
+    at: now,
+    totalAdverts: current.size,
+    newCount: newIds.length,
+    goneCount: goneIds.length,
+    weekMatchNewCount: weekMatchNewEvents.length,
+    weekMatchGoneCount: weekMatchGoneEvents.length,
+    notified,
+    bootstrap: isBootstrap
+  });
 
   console.log(
     `Klart. ${current.size} annonser just nu. ${newIds.length} nya, ${goneIds.length} borttagna.`

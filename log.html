@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spejarloggen — Husvagnsquesten</title>
+<meta name="description" content="Logg över alla skrapningar av Bödagårdens husvagnsannonser, senaste 30 dagarna." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --parchment: #f2e6c9;
+    --ink: #3a2b1a;
+    --ink-soft: #6b5638;
+    --gold: #a97b26;
+    --gold-bright: #c9932f;
+    --border: #8a6a3a;
+    --shadow: rgba(58, 43, 26, 0.35);
+    --bg: #1b1410;
+    --row-alt: rgba(255,255,255,0.03);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --parchment: #2a2119;
+      --ink: #e9dcc0;
+      --ink-soft: #c2b190;
+      --gold: #d9a94a;
+      --gold-bright: #eec876;
+      --border: #6b5230;
+      --shadow: rgba(0, 0, 0, 0.55);
+      --bg: #100c09;
+    }
+  }
+  :root[data-theme="dark"] {
+    --parchment: #2a2119; --ink: #e9dcc0; --ink-soft: #c2b190;
+    --gold: #d9a94a; --gold-bright: #eec876; --border: #6b5230;
+    --shadow: rgba(0, 0, 0, 0.55); --bg: #100c09;
+  }
+  :root[data-theme="light"] {
+    --parchment: #f2e6c9; --ink: #3a2b1a; --ink-soft: #6b5638;
+    --gold: #a97b26; --gold-bright: #c9932f; --border: #8a6a3a;
+    --shadow: rgba(58, 43, 26, 0.35); --bg: #1b1410;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "EB Garamond", Georgia, serif;
+    min-height: 100vh;
+    padding: 2.5rem 1rem 4rem;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  header { text-align: center; margin-bottom: 2rem; }
+  h1 {
+    font-family: "Cinzel", serif;
+    color: var(--gold-bright);
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    margin: 0 0 0.4rem;
+  }
+  .sub { color: #d8c9a3; font-size: 0.95rem; font-style: italic; }
+  .back {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--gold-bright);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+  }
+  .back:hover { text-decoration: underline; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--parchment);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    font-size: 0.92rem;
+  }
+  thead th {
+    font-family: "Cinzel", serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--ink-soft);
+    padding: 0.6rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 0.5rem 0.7rem;
+    color: var(--ink);
+    border-bottom: 1px solid rgba(139,106,58,0.15);
+    white-space: nowrap;
+  }
+  tbody tr:nth-child(even) { background: var(--row-alt); }
+  .match { color: var(--gold-bright); font-weight: 600; }
+  .empty { text-align: center; color: #d8c9a3; font-style: italic; padding: 3rem 1rem; }
+
+  .table-wrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🕵️ Spejarloggen</h1>
+    <p class="sub">Varje kontrollrunda spejarna gjort av Bödagårdens anslagstavla, senaste 30 dagarna.</p>
+    <a class="back" href="./index.html">← Tillbaka till questet</a>
+  </header>
+  <div class="table-wrap">
+    <table id="log-table" hidden>
+      <thead>
+        <tr>
+          <th>Tid</th>
+          <th>Annonser</th>
+          <th>Nya</th>
+          <th>Borta</th>
+          <th>V.31-träff</th>
+          <th>Notis skickad</th>
+        </tr>
+      </thead>
+      <tbody id="log-body"></tbody>
+    </table>
+  </div>
+  <div class="empty" id="empty-msg" hidden>Ingen logg än — spejarna har inte rapporterat in något.</div>
+</div>
+
+<script>
+async function load() {
+  const table = document.getElementById("log-table");
+  const body = document.getElementById("log-body");
+  const emptyMsg = document.getElementById("empty-msg");
+  try {
+    const res = await fetch("./scrapelog.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("scrapelog.json saknas");
+    const log = await res.json();
+
+    if (!log.length) {
+      emptyMsg.hidden = false;
+      return;
+    }
+
+    const rows = [...log].reverse().map((e) => {
+      const d = new Date(e.at);
+      const time = d.toLocaleString("sv-SE", { dateStyle: "short", timeStyle: "short" });
+      const weekMatch = (e.weekMatchNewCount || 0) + (e.weekMatchGoneCount || 0);
+      return `<tr>
+        <td>${time}</td>
+        <td>${e.totalAdverts}</td>
+        <td>${e.newCount}</td>
+        <td>${e.goneCount}</td>
+        <td class="${weekMatch > 0 ? "match" : ""}">${weekMatch > 0 ? weekMatch : "–"}</td>
+        <td>${e.notified ? "🎯 Ja" : "–"}</td>
+      </tr>`;
+    });
+    body.innerHTML = rows.join("");
+    table.hidden = false;
+  } catch (err) {
+    emptyMsg.textContent = "Kunde inte läsa loggen just nu.";
+    emptyMsg.hidden = false;
+    console.error(err);
+  }
+}
+load();
+</script>
+</body>
+</html>

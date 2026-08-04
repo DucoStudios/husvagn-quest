@@ -148,6 +148,84 @@ ${items}
 `;
 }
 
+const GHL_API_BASE = "https://services.leadconnectorhq.com";
+const GHL_API_VERSION = "2021-07-28";
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function buildNotificationHtml(newEvents, goneEvents) {
+  const newList = newEvents
+    .map(
+      (e) => `<li style="margin-bottom:10px;">
+        <a href="${escapeHtml(e.url)}" style="color:#7a4a12;font-weight:600;">${escapeHtml(e.title)}</a>
+        ${e.plats ? ` &mdash; plats ${escapeHtml(e.plats)}` : ""}
+      </li>`
+    )
+    .join("\n");
+  const goneList = goneEvents
+    .map((e) => `<li style="margin-bottom:6px;color:#777;">${escapeHtml(e.title)}${e.plats ? ` (plats ${escapeHtml(e.plats)})` : ""} &mdash; borta</li>`)
+    .join("\n");
+
+  return `
+  <div style="font-family:Georgia,serif;max-width:560px;">
+    <p>Hej Tomas! ⚔️🏕️</p>
+    ${
+      newEvents.length > 0
+        ? `<p><strong>${newEvents.length} ny${newEvents.length === 1 ? "" : "a"} quest${newEvents.length === 1 ? "" : "er"} har dykt upp på Bödagårdens husvagnsanslagstavla:</strong></p>
+           <ul>${newList}</ul>`
+        : ""
+    }
+    ${
+      goneEvents.length > 0
+        ? `<p style="color:#777;">Dessa har någon annan hunnit ta:</p><ul>${goneList}</ul>`
+        : ""
+    }
+    <p>Hela listan, med bilder och alla detaljer: <a href="${SITE_URL}">${SITE_URL}</a></p>
+    <p style="color:#999;font-size:0.85em;">Lycka till på jakten! / David & Jean-Claude</p>
+  </div>`;
+}
+
+async function sendTomasNotification(newEvents, goneEvents) {
+  const token = process.env.GHL_PRIVATE_INTEGRATION_TOKEN;
+  const contactId = process.env.TOMAS_GHL_CONTACT_ID;
+  if (!token || !contactId) {
+    console.log("Hoppar över mejlnotis (GHL-secrets saknas i miljön).");
+    return;
+  }
+  const subject =
+    newEvents.length > 0
+      ? `${newEvents.length} ny${newEvents.length === 1 ? "" : "a"} husvagnsquest${newEvents.length === 1 ? "" : "er"} vid Bödagården`
+      : "Husvagnsquesten har ändrats";
+
+  const res = await fetch(`${GHL_API_BASE}/conversations/messages`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Version: GHL_API_VERSION,
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      type: "Email",
+      contactId,
+      subject,
+      html: buildNotificationHtml(newEvents, goneEvents),
+      emailFrom: process.env.GHL_AGENT_EMAIL || "jean-claude@mail.ducostudios.com"
+    })
+  });
+  if (!res.ok) {
+    console.error(`Mejlnotis misslyckades (${res.status}): ${await res.text()}`);
+    return;
+  }
+  console.log("Mejlnotis skickad till Tomas.");
+}
+
 async function main() {
   const state = await loadState();
   const isBootstrap = state.lastUpdated === null;
@@ -201,6 +279,11 @@ async function main() {
     // lastUpdated-tidsstämpeln ensam trigga ett git-commit varje körning.
     await writeFile(DATA_FILE, JSON.stringify(nextState, null, 2) + "\n", "utf8");
     await writeFile(FEED_FILE, buildFeedXml(nextFeedItems), "utf8");
+  }
+
+  // Ingen notis vid bootstrap (då är "nya" bara den befintliga listan).
+  if (!isBootstrap && (newFeedEvents.length > 0 || goneFeedEvents.length > 0)) {
+    await sendTomasNotification(newFeedEvents, goneFeedEvents);
   }
 
   console.log(

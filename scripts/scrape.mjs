@@ -3,7 +3,9 @@
 
 import { readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
+import { matchesWeek } from "./weeks.mjs";
 
+const TARGET_WEEK = 32;
 const LIST_URL = "https://www.bodagarden.nu/husvagnar-uthyres/";
 const SITE_URL = "https://ducostudios.github.io/husvagn-quest/";
 const FEED_URL = `${SITE_URL}feed.xml`;
@@ -160,14 +162,17 @@ function escapeHtml(str) {
 }
 
 function buildNotificationHtml(newEvents, goneEvents) {
-  const newList = newEvents
-    .map(
-      (e) => `<li style="margin-bottom:10px;">
+  const weekMatches = newEvents.filter((e) => matchesWeek(e.title, TARGET_WEEK));
+  const otherNew = newEvents.filter((e) => !matchesWeek(e.title, TARGET_WEEK));
+
+  const renderItem = (e, highlight) => `<li style="margin-bottom:10px;${highlight ? "background:#f2e6c9;padding:6px 10px;border-radius:4px;border:1px solid #c9932f;" : ""}">
+        ${highlight ? "🎯 <strong>Vecka " + TARGET_WEEK + "-match!</strong> " : ""}
         <a href="${escapeHtml(e.url)}" style="color:#7a4a12;font-weight:600;">${escapeHtml(e.title)}</a>
         ${e.plats ? ` &mdash; plats ${escapeHtml(e.plats)}` : ""}
-      </li>`
-    )
-    .join("\n");
+      </li>`;
+
+  const weekList = weekMatches.map((e) => renderItem(e, true)).join("\n");
+  const otherList = otherNew.map((e) => renderItem(e, false)).join("\n");
   const goneList = goneEvents
     .map((e) => `<li style="margin-bottom:6px;color:#777;">${escapeHtml(e.title)}${e.plats ? ` (plats ${escapeHtml(e.plats)})` : ""} &mdash; borta</li>`)
     .join("\n");
@@ -176,9 +181,15 @@ function buildNotificationHtml(newEvents, goneEvents) {
   <div style="font-family:Georgia,serif;max-width:560px;">
     <p>Hej Tomas! ⚔️🏕️</p>
     ${
-      newEvents.length > 0
-        ? `<p><strong>${newEvents.length} ny${newEvents.length === 1 ? "" : "a"} quest${newEvents.length === 1 ? "" : "er"} har dykt upp på Bödagårdens husvagnsanslagstavla:</strong></p>
-           <ul>${newList}</ul>`
+      weekMatches.length > 0
+        ? `<p><strong>Questet är nära sitt mål — ${weekMatches.length} husvagn${weekMatches.length === 1 ? "" : "ar"} ledig${weekMatches.length === 1 ? "" : "a"} vecka ${TARGET_WEEK} har dykt upp:</strong></p>
+           <ul>${weekList}</ul>`
+        : ""
+    }
+    ${
+      otherNew.length > 0
+        ? `<p>${weekMatches.length > 0 ? "Övriga nya annonser (annan vecka):" : `<strong>${otherNew.length} ny${otherNew.length === 1 ? "" : "a"} quest${otherNew.length === 1 ? "" : "er"} har dykt upp:</strong>`}</p>
+           <ul>${otherList}</ul>`
         : ""
     }
     ${
@@ -198,8 +209,11 @@ async function sendTomasNotification(newEvents, goneEvents) {
     console.log("Hoppar över mejlnotis (GHL-secrets saknas i miljön).");
     return;
   }
+  const weekMatchCount = newEvents.filter((e) => matchesWeek(e.title, TARGET_WEEK)).length;
   const subject =
-    newEvents.length > 0
+    weekMatchCount > 0
+      ? `🎯 Vecka ${TARGET_WEEK}-match! ${weekMatchCount} husvagn${weekMatchCount === 1 ? "" : "ar"} lediga vid Bödagården`
+      : newEvents.length > 0
       ? `${newEvents.length} ny${newEvents.length === 1 ? "" : "a"} husvagnsquest${newEvents.length === 1 ? "" : "er"} vid Bödagården`
       : "Husvagnsquesten har ändrats";
 

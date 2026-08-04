@@ -16,7 +16,7 @@ En GitHub Action (`.github/workflows/scrape.yml`) kör `scripts/scrape.mjs` på 
 
 Skriptet skrapar annonslistan, jämför med `data.json` från förra körningen och:
 
-- lägger till nya annonser (visas på sidan, taggas "Ny quest" i 3 dagar)
+- lägger till nya annonser (visas på sidan, taggas "Ny quest" i 1 dag)
 - tar bort annonser som inte längre finns på bodagarden.nu
 - loggar båda händelserna i `feed.xml` (RSS)
 

@@ -253,7 +253,6 @@
     <p class="subtitle">Hör upp, äventyrare Tomas! Nya husvagnar dyker upp på Bödagårdens Camping — och försvinner lika snabbt i andra äventyrares händer. Denna tavla vaktas åt dig dygnet runt, så att du alltid är först på plats.</p>
     <div class="meta-row">
       <span class="meta-pill">📜 Källa: <a href="https://www.bodagarden.nu/husvagnar-uthyres/" target="_blank" rel="noopener">bodagarden.nu</a></span>
-      <span class="meta-pill">📬 Du får redan mejl hit när listan ändras</span>
       <span class="meta-pill">Senast ändrad: <span id="last-updated">–</span></span>
     </div>
   </header>
@@ -292,10 +291,10 @@ async function load() {
     countEl.textContent = `${adverts.length} väntande quest${adverts.length === 1 ? "" : "er"}`;
 
     const now = Date.now();
-    const THREE_DAYS = 3 * 24 * 60 * 60 * 1000;
+    const ONE_DAY = 24 * 60 * 60 * 1000;
 
     board.innerHTML = adverts.map((a) => {
-      const isNew = a.firstSeenByScraper && (now - new Date(a.firstSeenByScraper).getTime() < THREE_DAYS);
+      const isNew = a.firstSeenByScraper && (now - new Date(a.firstSeenByScraper).getTime() < ONE_DAY);
       const img = a.image
         ? `<img class="quest-thumb" src="${escapeHtml(a.image)}" alt="" loading="lazy" />`
         : "";

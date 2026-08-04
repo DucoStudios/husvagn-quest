@@ -20,9 +20,9 @@ Filerna committas bara när något faktiskt ändrats - ingen commit-spam.
 
 ## Mejl-notis
 
-Sköts direkt av `scripts/scrape.mjs` mot GoHighLevels REST-API när en TARGET_WEEK-relevant
-ändring upptäcks - kräver `GHL_PRIVATE_INTEGRATION_TOKEN` och `TOMAS_GHL_CONTACT_ID` som
-GitHub Actions-secrets (redan satta i repot).
+Sköts direkt av `scripts/scrape.mjs` mot Resends REST-API när en TARGET_WEEK-relevant
+ändring upptäcks - kräver `RESEND_API_KEY` som GitHub Actions-secret (redan satt i repot).
+Dedikerad nyckel som bara skickar mejl, ingen koppling till affärsdata.
 
 ## Köra manuellt
 

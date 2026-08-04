@@ -26,9 +26,7 @@ jobs:
       - name: Kör skrapare
         id: scrape
         env:
-          GHL_PRIVATE_INTEGRATION_TOKEN: ${{ secrets.GHL_PRIVATE_INTEGRATION_TOKEN }}
-          TOMAS_GHL_CONTACT_ID: ${{ secrets.TOMAS_GHL_CONTACT_ID }}
-          GHL_AGENT_EMAIL: jean-claude@mail.ducostudios.com
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: node scripts/scrape.mjs
 
       - name: Committa och pusha om något ändrats

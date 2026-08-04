@@ -150,8 +150,9 @@ ${items}
 `;
 }
 
-const GHL_API_BASE = "https://services.leadconnectorhq.com";
-const GHL_API_VERSION = "2021-07-28";
+const RESEND_API_BASE = "https://api.resend.com";
+const TOMAS_EMAIL = "tomas.h.goransson@gmail.com";
+const NOTIFY_FROM = "Husvagnsquesten <onboarding@resend.dev>";
 
 function escapeHtml(str) {
   return String(str)
@@ -195,11 +196,10 @@ export function buildNotificationHtml(newEvents, goneEvents) {
   </div>`;
 }
 
-export async function sendTomasNotification(newEvents, goneEvents) {
-  const token = process.env.GHL_PRIVATE_INTEGRATION_TOKEN;
-  const contactId = process.env.TOMAS_GHL_CONTACT_ID;
-  if (!token || !contactId) {
-    console.log("Hoppar över mejlnotis (GHL-secrets saknas i miljön).");
+export async function sendTomasNotification(newEvents, goneEvents, toEmail = TOMAS_EMAIL) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.log("Hoppar över mejlnotis (RESEND_API_KEY saknas i miljön).");
     return;
   }
   const subject =
@@ -207,20 +207,17 @@ export async function sendTomasNotification(newEvents, goneEvents) {
       ? `🎯 Vecka ${TARGET_WEEK}-match! ${newEvents.length} husvagn${newEvents.length === 1 ? "" : "ar"} lediga vid Bödagården`
       : `Vecka ${TARGET_WEEK}-husvagn borta från Bödagården`;
 
-  const res = await fetch(`${GHL_API_BASE}/conversations/messages`, {
+  const res = await fetch(`${RESEND_API_BASE}/emails`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
-      Version: GHL_API_VERSION,
-      "Content-Type": "application/json",
-      Accept: "application/json"
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      type: "Email",
-      contactId,
+      from: NOTIFY_FROM,
+      to: [toEmail],
       subject,
-      html: buildNotificationHtml(newEvents, goneEvents),
-      emailFrom: process.env.GHL_AGENT_EMAIL || "jean-claude@mail.ducostudios.com"
+      html: buildNotificationHtml(newEvents, goneEvents)
     })
   });
   if (!res.ok) {

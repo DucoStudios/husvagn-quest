@@ -1,0 +1,8 @@
+{
+  "name": "husvagn-quest",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "scrape": "node scripts/scrape.mjs"
+  }
+}

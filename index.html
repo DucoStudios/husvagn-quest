@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bödagårdens Husvagnsquest</title>
+<meta name="description" content="Lediga husvagns-quests på Bödagårdens Camping, Öland — uppdateras automatiskt." />
+<meta name="robots" content="index, follow" />
+<link rel="alternate" type="application/rss+xml" title="Bödagårdens Husvagnsquest" href="./feed.xml" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%95%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --parchment: #f2e6c9;
+    --parchment-dark: #e6d3a3;
+    --ink: #3a2b1a;
+    --ink-soft: #6b5638;
+    --gold: #a97b26;
+    --gold-bright: #c9932f;
+    --crimson: #7a2222;
+    --forest: #2f4a2f;
+    --border: #8a6a3a;
+    --shadow: rgba(58, 43, 26, 0.35);
+    --bg: #1b1410;
+    --card-bg: var(--parchment);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --parchment: #2a2119;
+      --parchment-dark: #241b14;
+      --ink: #e9dcc0;
+      --ink-soft: #c2b190;
+      --gold: #d9a94a;
+      --gold-bright: #eec876;
+      --border: #6b5230;
+      --shadow: rgba(0, 0, 0, 0.55);
+      --bg: #100c09;
+      --card-bg: var(--parchment);
+    }
+  }
+  :root[data-theme="dark"] {
+    --parchment: #2a2119;
+    --parchment-dark: #241b14;
+    --ink: #e9dcc0;
+    --ink-soft: #c2b190;
+    --gold: #d9a94a;
+    --gold-bright: #eec876;
+    --border: #6b5230;
+    --shadow: rgba(0, 0, 0, 0.55);
+    --bg: #100c09;
+  }
+  :root[data-theme="light"] {
+    --parchment: #f2e6c9;
+    --parchment-dark: #e6d3a3;
+    --ink: #3a2b1a;
+    --ink-soft: #6b5638;
+    --gold: #a97b26;
+    --gold-bright: #c9932f;
+    --border: #8a6a3a;
+    --shadow: rgba(58, 43, 26, 0.35);
+    --bg: #1b1410;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse at top, rgba(201, 147, 47, 0.12), transparent 60%),
+      repeating-linear-gradient(45deg, rgba(0,0,0,0.15) 0 2px, transparent 2px 40px);
+    color: var(--ink);
+    font-family: "EB Garamond", Georgia, serif;
+    min-height: 100vh;
+    padding: 2.5rem 1rem 4rem;
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .banner {
+    display: inline-block;
+    padding: 0.4rem 1.4rem;
+    border: 2px solid var(--gold);
+    border-radius: 999px;
+    color: var(--gold-bright);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-family: "Cinzel Decorative", "Cinzel", serif;
+    color: var(--gold-bright);
+    font-size: clamp(1.8rem, 5vw, 2.9rem);
+    margin: 0 0 0.5rem;
+    text-shadow: 0 2px 12px var(--shadow);
+  }
+  .subtitle {
+    color: #d8c9a3;
+    font-size: 1.1rem;
+    font-style: italic;
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1.4rem;
+  }
+  .meta-pill {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: #d8c9a3;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+  }
+  .meta-pill a { color: var(--gold-bright); text-decoration: none; }
+  .meta-pill a:hover { text-decoration: underline; }
+
+  .quest-count {
+    font-family: "Cinzel", serif;
+    text-align: center;
+    color: var(--gold-bright);
+    font-size: 1.15rem;
+    margin: 2.2rem 0 1.2rem;
+    letter-spacing: 0.04em;
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.3rem;
+  }
+
+  .quest-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.1rem 1.2rem 1.3rem;
+    box-shadow: 0 10px 24px var(--shadow), inset 0 0 40px rgba(139, 106, 58, 0.08);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .quest-card::before {
+    content: "⚜";
+    position: absolute;
+    top: 0.5rem;
+    right: 0.7rem;
+    color: var(--gold);
+    opacity: 0.5;
+    font-size: 1rem;
+  }
+  .quest-card.new-arrival {
+    border-color: var(--gold-bright);
+    box-shadow: 0 0 0 2px var(--gold-bright), 0 10px 24px var(--shadow);
+  }
+  .new-tag {
+    align-self: flex-start;
+    background: var(--crimson);
+    color: #f5e6c8;
+    font-family: "Cinzel", serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border-radius: 3px;
+  }
+
+  .quest-thumb {
+    width: 100%;
+    aspect-ratio: 310 / 190;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: var(--parchment-dark);
+  }
+
+  .quest-title {
+    font-family: "Cinzel", serif;
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 1.08rem;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  .quest-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+  .quest-facts span b { color: var(--ink); font-weight: 600; }
+
+  .quest-link {
+    margin-top: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    align-self: flex-start;
+    background: var(--forest);
+    color: #f0e9d2;
+    text-decoration: none;
+    font-family: "Cinzel", serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+    padding: 0.5rem 0.9rem;
+    border-radius: 4px;
+    border: 1px solid var(--gold);
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .quest-link:hover { background: #3d613d; transform: translateY(-1px); }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    color: #d8c9a3;
+    font-style: italic;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: #a89571;
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+  footer a { color: var(--gold-bright); }
+
+  #last-updated { color: var(--gold-bright); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="banner">⚔ Anslagstavlan vid Böda ⚔</div>
+    <h1>Husvagnsquesten</h1>
+    <p class="subtitle">Nya husvagnar dyker upp på Bödagårdens Camping — och försvinner lika snabbt. Här listas varje quest som just nu väntar på en äventyrare.</p>
+    <div class="meta-row">
+      <span class="meta-pill">📜 Källa: <a href="https://www.bodagarden.nu/husvagnar-uthyres/" target="_blank" rel="noopener">bodagarden.nu</a></span>
+      <span class="meta-pill">📡 <a href="./feed.xml">RSS-flöde</a> (prenumerera för notis)</span>
+      <span class="meta-pill">Senast ändrad: <span id="last-updated">–</span></span>
+    </div>
+  </header>
+
+  <div class="quest-count" id="quest-count"></div>
+  <div class="board" id="board"></div>
+
+  <footer>
+    Vill du ha ett mejl direkt när en quest dyker upp? Klistra in RSS-länken ovan på
+    <a href="https://blogtrottr.com" target="_blank" rel="noopener">blogtrottr.com</a> (gratis, ingen inloggning) så mejlas du automatiskt.<br />
+    Kollas automatiskt med jämna mellanrum. Länkar leder alltid till den riktiga annonsen på bodagarden.nu — betalning och kontakt sker där, aldrig här.
+  </footer>
+</div>
+
+<script>
+async function load() {
+  const board = document.getElementById("board");
+  const countEl = document.getElementById("quest-count");
+  const updatedEl = document.getElementById("last-updated");
+  try {
+    const res = await fetch("./data.json", { cache: "no-store" });
+    const data = await res.json();
+    const adverts = data.adverts || [];
+
+    if (data.lastUpdated) {
+      const d = new Date(data.lastUpdated);
+      updatedEl.textContent = d.toLocaleString("sv-SE", { dateStyle: "long", timeStyle: "short" });
+    }
+
+    if (adverts.length === 0) {
+      countEl.textContent = "";
+      board.innerHTML = '<div class="empty-state">Inga quests väntar just nu... Vila vid lägerelden och håll utkik.</div>';
+      return;
+    }
+
+    countEl.textContent = `${adverts.length} väntande quest${adverts.length === 1 ? "" : "er"}`;
+
+    const now = Date.now();
+    const THREE_DAYS = 3 * 24 * 60 * 60 * 1000;
+
+    board.innerHTML = adverts.map((a) => {
+      const isNew = a.firstSeenByScraper && (now - new Date(a.firstSeenByScraper).getTime() < THREE_DAYS);
+      const img = a.image
+        ? `<img class="quest-thumb" src="${escapeHtml(a.image)}" alt="" loading="lazy" />`
+        : "";
+      return `
+        <article class="quest-card ${isNew ? "new-arrival" : ""}">
+          ${isNew ? '<span class="new-tag">Ny quest</span>' : ""}
+          ${img}
+          <h2 class="quest-title">${escapeHtml(a.title)}</h2>
+          <div class="quest-facts">
+            <span>📅 Publicerad: <b>${escapeHtml(a.postedRaw || "okänt datum")}</b></span>
+            <span>📍 Lägerplats: <b>${escapeHtml(a.plats || "okänd")}</b></span>
+          </div>
+          <a class="quest-link" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">Öppna quest-annonsen →</a>
+        </article>
+      `;
+    }).join("");
+  } catch (err) {
+    board.innerHTML = '<div class="empty-state">Kunde inte läsa questlistan just nu. Försök igen strax.</div>';
+    console.error(err);
+  }
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+load();
+</script>
+</body>
+</html>

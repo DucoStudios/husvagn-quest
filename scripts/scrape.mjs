@@ -5,7 +5,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { matchesWeek } from "./weeks.mjs";
 
-const TARGET_WEEK = 32;
+const TARGET_WEEK = 31;
 const LIST_URL = "https://www.bodagarden.nu/husvagnar-uthyres/";
 const SITE_URL = "https://ducostudios.github.io/husvagn-quest/";
 const FEED_URL = `${SITE_URL}feed.xml`;
@@ -285,7 +285,7 @@ async function main() {
     await writeFile(FEED_FILE, buildFeedXml(nextFeedItems), "utf8");
   }
 
-  // Notis bara om vecka 32-relevanta händelser - sidan visar numera bara
+  // Notis bara om vecka 31-relevanta händelser - sidan visar numera bara
   // sådana träffar, så en notis om övriga skulle bara vara brus för Tomas.
   const weekMatchNewEvents = newFeedEvents.filter((e) => matchesWeek(e.title, TARGET_WEEK));
   const weekMatchGoneEvents = goneFeedEvents.filter((e) => matchesWeek(e.title, TARGET_WEEK));

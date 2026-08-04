@@ -161,18 +161,17 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
+// newEvents/goneEvents är redan filtrerade till annonser som matchar
+// TARGET_WEEK innan de når hit - se main().
 function buildNotificationHtml(newEvents, goneEvents) {
-  const weekMatches = newEvents.filter((e) => matchesWeek(e.title, TARGET_WEEK));
-  const otherNew = newEvents.filter((e) => !matchesWeek(e.title, TARGET_WEEK));
-
-  const renderItem = (e, highlight) => `<li style="margin-bottom:10px;${highlight ? "background:#f2e6c9;padding:6px 10px;border-radius:4px;border:1px solid #c9932f;" : ""}">
-        ${highlight ? "🎯 <strong>Vecka " + TARGET_WEEK + "-match!</strong> " : ""}
+  const newList = newEvents
+    .map(
+      (e) => `<li style="margin-bottom:10px;">
         <a href="${escapeHtml(e.url)}" style="color:#7a4a12;font-weight:600;">${escapeHtml(e.title)}</a>
         ${e.plats ? ` &mdash; plats ${escapeHtml(e.plats)}` : ""}
-      </li>`;
-
-  const weekList = weekMatches.map((e) => renderItem(e, true)).join("\n");
-  const otherList = otherNew.map((e) => renderItem(e, false)).join("\n");
+      </li>`
+    )
+    .join("\n");
   const goneList = goneEvents
     .map((e) => `<li style="margin-bottom:6px;color:#777;">${escapeHtml(e.title)}${e.plats ? ` (plats ${escapeHtml(e.plats)})` : ""} &mdash; borta</li>`)
     .join("\n");
@@ -181,20 +180,14 @@ function buildNotificationHtml(newEvents, goneEvents) {
   <div style="font-family:Georgia,serif;max-width:560px;">
     <p>Hej Tomas! ⚔️🏕️</p>
     ${
-      weekMatches.length > 0
-        ? `<p><strong>Questet är nära sitt mål — ${weekMatches.length} husvagn${weekMatches.length === 1 ? "" : "ar"} ledig${weekMatches.length === 1 ? "" : "a"} vecka ${TARGET_WEEK} har dykt upp:</strong></p>
-           <ul>${weekList}</ul>`
-        : ""
-    }
-    ${
-      otherNew.length > 0
-        ? `<p>${weekMatches.length > 0 ? "Övriga nya annonser (annan vecka):" : `<strong>${otherNew.length} ny${otherNew.length === 1 ? "" : "a"} quest${otherNew.length === 1 ? "" : "er"} har dykt upp:</strong>`}</p>
-           <ul>${otherList}</ul>`
+      newEvents.length > 0
+        ? `<p><strong>Questet är nära sitt mål — ${newEvents.length} husvagn${newEvents.length === 1 ? "" : "ar"} ledig${newEvents.length === 1 ? "" : "a"} vecka ${TARGET_WEEK} har dykt upp:</strong></p>
+           <ul>${newList}</ul>`
         : ""
     }
     ${
       goneEvents.length > 0
-        ? `<p style="color:#777;">Dessa har någon annan hunnit ta:</p><ul>${goneList}</ul>`
+        ? `<p style="color:#777;">Dessa vecka ${TARGET_WEEK}-husvagnar har någon annan hunnit ta:</p><ul>${goneList}</ul>`
         : ""
     }
     <p>Hela listan, med bilder och alla detaljer: <a href="${SITE_URL}">${SITE_URL}</a></p>
@@ -209,13 +202,10 @@ async function sendTomasNotification(newEvents, goneEvents) {
     console.log("Hoppar över mejlnotis (GHL-secrets saknas i miljön).");
     return;
   }
-  const weekMatchCount = newEvents.filter((e) => matchesWeek(e.title, TARGET_WEEK)).length;
   const subject =
-    weekMatchCount > 0
-      ? `🎯 Vecka ${TARGET_WEEK}-match! ${weekMatchCount} husvagn${weekMatchCount === 1 ? "" : "ar"} lediga vid Bödagården`
-      : newEvents.length > 0
-      ? `${newEvents.length} ny${newEvents.length === 1 ? "" : "a"} husvagnsquest${newEvents.length === 1 ? "" : "er"} vid Bödagården`
-      : "Husvagnsquesten har ändrats";
+    newEvents.length > 0
+      ? `🎯 Vecka ${TARGET_WEEK}-match! ${newEvents.length} husvagn${newEvents.length === 1 ? "" : "ar"} lediga vid Bödagården`
+      : `Vecka ${TARGET_WEEK}-husvagn borta från Bödagården`;
 
   const res = await fetch(`${GHL_API_BASE}/conversations/messages`, {
     method: "POST",
@@ -295,9 +285,12 @@ async function main() {
     await writeFile(FEED_FILE, buildFeedXml(nextFeedItems), "utf8");
   }
 
-  // Ingen notis vid bootstrap (då är "nya" bara den befintliga listan).
-  if (!isBootstrap && (newFeedEvents.length > 0 || goneFeedEvents.length > 0)) {
-    await sendTomasNotification(newFeedEvents, goneFeedEvents);
+  // Notis bara om vecka 32-relevanta händelser - sidan visar numera bara
+  // sådana träffar, så en notis om övriga skulle bara vara brus för Tomas.
+  const weekMatchNewEvents = newFeedEvents.filter((e) => matchesWeek(e.title, TARGET_WEEK));
+  const weekMatchGoneEvents = goneFeedEvents.filter((e) => matchesWeek(e.title, TARGET_WEEK));
+  if (!isBootstrap && (weekMatchNewEvents.length > 0 || weekMatchGoneEvents.length > 0)) {
+    await sendTomasNotification(weekMatchNewEvents, weekMatchGoneEvents);
   }
 
   console.log(

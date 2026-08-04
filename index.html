@@ -183,18 +183,6 @@
     background: linear-gradient(180deg, rgba(201, 147, 47, 0.14), transparent 40%), var(--card-bg);
     box-shadow: 0 0 0 2px var(--gold-bright), 0 12px 28px var(--shadow);
   }
-  .week-tag {
-    align-self: flex-start;
-    background: var(--gold-bright);
-    color: #241b14;
-    font-family: "Cinzel", serif;
-    font-weight: 700;
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 0.22rem 0.6rem;
-    border-radius: 3px;
-  }
 
   .quest-thumb {
     width: 100%;
@@ -292,7 +280,7 @@
   <header>
     <div class="banner">⚔ Ett kall från Bödagården, riktat till Tomas ⚔</div>
     <h1>Tomas Husvagnsquest</h1>
-    <p class="subtitle">Hör upp, äventyrare Tomas! Questet: erövra en husvagn ledig <strong>vecka 32</strong> innan någon annan äventyrare hinner före. Träffar taggas guld nedan. Nya husvagnar dyker upp på Bödagårdens Camping — och försvinner lika snabbt.</p>
+    <p class="subtitle">Hör upp, äventyrare Tomas! Questet: erövra en husvagn ledig <strong>vecka 32</strong> innan någon annan äventyrare hinner före. Tavlan visar bara de husvagnar som uttryckligen nämner vecka 32 — de dyker upp, och försvinner, lika snabbt.</p>
     <div class="meta-row">
       <span class="meta-pill">📜 Källa: <a href="https://www.bodagarden.nu/husvagnar-uthyres/" target="_blank" rel="noopener">bodagarden.nu</a></span>
       <span class="meta-pill">Senast ändrad: <span id="last-updated">–</span></span>
@@ -353,22 +341,21 @@ async function load() {
       updatedEl.textContent = d.toLocaleString("sv-SE", { dateStyle: "long", timeStyle: "short" });
     }
 
-    if (adverts.length === 0) {
-      countEl.textContent = "";
-      board.innerHTML = '<div class="empty-state">Inga quests väntar just nu... Vila vid lägerelden och håll utkik.</div>';
-      return;
-    }
-
     const now = Date.now();
     const ONE_DAY = 24 * 60 * 60 * 1000;
 
     const ranked = adverts
-      .map((a) => ({ ...a, isMatch: matchesWeek(a.title, TARGET_WEEK) }))
-      .sort((a, b) => (b.isMatch === a.isMatch ? 0 : b.isMatch ? 1 : -1));
+      .filter((a) => matchesWeek(a.title, TARGET_WEEK))
+      .map((a) => ({ ...a, isMatch: true }))
+      .sort((a, b) => (b.postedISO ?? "").localeCompare(a.postedISO ?? ""));
 
-    const matchCount = ranked.filter((a) => a.isMatch).length;
-    countEl.textContent = `${adverts.length} väntande quest${adverts.length === 1 ? "" : "er"}` +
-      (matchCount > 0 ? ` · ${matchCount} matchar vecka ${TARGET_WEEK} 🎯` : "");
+    if (ranked.length === 0) {
+      countEl.textContent = "";
+      board.innerHTML = `<div class="empty-state">Ingen husvagn matchar vecka ${TARGET_WEEK} just nu... Vila vid lägerelden och håll utkik.</div>`;
+      return;
+    }
+
+    countEl.textContent = `${ranked.length} quest${ranked.length === 1 ? "" : "er"} matchar vecka ${TARGET_WEEK} 🎯`;
 
     board.innerHTML = ranked.map((a) => {
       const isNew = a.firstSeenByScraper && (now - new Date(a.firstSeenByScraper).getTime() < ONE_DAY);
@@ -376,8 +363,7 @@ async function load() {
         ? `<img class="quest-thumb" src="${escapeHtml(a.image)}" alt="" loading="lazy" />`
         : "";
       return `
-        <article class="quest-card ${isNew ? "new-arrival" : ""} ${a.isMatch ? "week-match" : ""}">
-          ${a.isMatch ? `<span class="week-tag">🎯 Vecka ${TARGET_WEEK}</span>` : ""}
+        <article class="quest-card week-match ${isNew ? "new-arrival" : ""}">
           ${isNew ? '<span class="new-tag">Ny quest</span>' : ""}
           ${img}
           <h2 class="quest-title">${escapeHtml(a.title)}</h2>

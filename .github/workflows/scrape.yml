@@ -2,11 +2,8 @@ name: Skrapa husvagnsannonser
 
 on:
   schedule:
-    # Högsäsong (juni-augusti): var 15:e minut, UTC.
-    - cron: "*/15 * * 6-8 *"
-    # Lågsäsong men öppet (april, maj, september, oktober): en gång i timmen.
-    - cron: "0 * * 4,5,9,10 *"
-    # November-mars: ingen schemaläggning alls = helt pausat.
+    # En gång i timmen, hela året.
+    - cron: "0 * * * *"
   workflow_dispatch: {}
 
 permissions:

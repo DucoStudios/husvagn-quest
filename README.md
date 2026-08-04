@@ -8,25 +8,21 @@ och listar vilka som är lediga just nu.
 
 ## Hur det funkar
 
-En GitHub Action (`.github/workflows/scrape.yml`) kör `scripts/scrape.mjs` på ett schema:
-
-- Juni–augusti (högsäsong): var 15:e minut
-- April, maj, september, oktober: en gång i timmen
-- November–mars: helt pausat (ingen schemaläggning)
+En GitHub Action (`.github/workflows/scrape.yml`) kör `scripts/scrape.mjs` en gång i timmen, hela året.
 
 Skriptet skrapar annonslistan, jämför med `data.json` från förra körningen och:
 
-- lägger till nya annonser (visas på sidan, taggas "Ny quest" i 1 dag)
+- lägger till nya annonser som matchar `TARGET_WEEK` (satt i både `scripts/scrape.mjs` och `index.html`)
 - tar bort annonser som inte längre finns på bodagarden.nu
-- loggar båda händelserna i `feed.xml` (RSS)
+- loggar båda händelserna i `feed.xml` (RSS, mest som rå logg numera)
 
 Filerna committas bara när något faktiskt ändrats - ingen commit-spam.
 
-## Mejl-notis utan kod
+## Mejl-notis
 
-RSS-flödet är själva notiskanalen. Vill man ha ett mejl varje gång listan ändras,
-klistra in feed-länken på [blogtrottr.com](https://blogtrottr.com) (gratis, ingen inloggning) -
-klart på 30 sekunder, inga API-nycklar eller lösenord inblandade.
+Sköts direkt av `scripts/scrape.mjs` mot GoHighLevels REST-API när en TARGET_WEEK-relevant
+ändring upptäcks - kräver `GHL_PRIVATE_INTEGRATION_TOKEN` och `TOMAS_GHL_CONTACT_ID` som
+GitHub Actions-secrets (redan satta i repot).
 
 ## Köra manuellt
 

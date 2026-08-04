@@ -260,6 +260,30 @@
   }
   footer a { color: var(--gold-bright); }
 
+  .countdown {
+    max-width: 420px;
+    margin: 1.6rem auto 0;
+    text-align: center;
+    background: rgba(201, 147, 47, 0.1);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+  }
+  .countdown-label {
+    display: block;
+    font-family: "Cinzel", serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #d8c9a3;
+    margin-bottom: 0.3rem;
+  }
+  .countdown-value {
+    font-family: "Cinzel Decorative", serif;
+    font-size: 1.5rem;
+    color: var(--gold-bright);
+  }
+
   #last-updated { color: var(--gold-bright); }
 </style>
 </head>
@@ -272,6 +296,10 @@
     <div class="meta-row">
       <span class="meta-pill">📜 Källa: <a href="https://www.bodagarden.nu/husvagnar-uthyres/" target="_blank" rel="noopener">bodagarden.nu</a></span>
       <span class="meta-pill">Senast ändrad: <span id="last-updated">–</span></span>
+    </div>
+    <div class="countdown" id="countdown" hidden>
+      <span class="countdown-label">⏳ Portarna till vecka 32 öppnas om</span>
+      <span class="countdown-value" id="countdown-value">–</span>
     </div>
   </header>
 
@@ -286,9 +314,30 @@
 </div>
 
 <script type="module">
-import { matchesWeek } from "./scripts/weeks.mjs";
+import { matchesWeek, nextOccurrenceOfWeekStart } from "./scripts/weeks.mjs";
 
 const TARGET_WEEK = 32;
+const ONE_MONTH_MS = 30 * 24 * 60 * 60 * 1000;
+
+function updateCountdown() {
+  const el = document.getElementById("countdown");
+  const valueEl = document.getElementById("countdown-value");
+  const now = new Date();
+  const target = nextOccurrenceOfWeekStart(TARGET_WEEK, now);
+  const msLeft = target - now;
+
+  if (msLeft > 0 && msLeft <= ONE_MONTH_MS) {
+    el.hidden = false;
+    const days = Math.floor(msLeft / (24 * 60 * 60 * 1000));
+    const hours = Math.floor((msLeft % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+    const minutes = Math.floor((msLeft % (60 * 60 * 1000)) / (60 * 1000));
+    valueEl.textContent = `${days}d ${hours}t ${minutes}m`;
+  } else {
+    el.hidden = true;
+  }
+}
+updateCountdown();
+setInterval(updateCountdown, 60 * 1000);
 
 async function load() {
   const board = document.getElementById("board");

@@ -23,3 +23,20 @@ export function extractWeeks(text) {
 export function matchesWeek(text, week) {
   return extractWeeks(text).includes(week);
 }
+
+// Måndagen (UTC) i ISO-vecka `week` för `year`.
+export function isoWeekStartDate(year, week) {
+  const simple = new Date(Date.UTC(year, 0, 1 + (week - 1) * 7));
+  const dow = simple.getUTCDay() || 7; // söndag=0 -> 7
+  simple.setUTCDate(simple.getUTCDate() - dow + 1);
+  return simple;
+}
+
+// Nästa gång ISO-vecka `week` börjar, räknat från `from`. Om den redan
+// pågår eller har passerat i år rullar den till samma vecka nästa år.
+export function nextOccurrenceOfWeekStart(week, from = new Date()) {
+  const year = from.getUTCFullYear();
+  let start = isoWeekStartDate(year, week);
+  if (start <= from) start = isoWeekStartDate(year + 1, week);
+  return start;
+}

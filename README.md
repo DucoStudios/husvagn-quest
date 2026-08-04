@@ -24,6 +24,11 @@ Sköts direkt av `scripts/scrape.mjs` mot Resends REST-API när en TARGET_WEEK-r
 ändring upptäcks - kräver `RESEND_API_KEY` som GitHub Actions-secret (redan satt i repot).
 Dedikerad nyckel som bara skickar mejl, ingen koppling till affärsdata.
 
+## Karaktärskort (cards.html)
+
+Bilderna i `images/` är beskurna/komprimerade utsnitt ur Howard Pyles illustrationer till
+*The Story of King Arthur and His Knights* (1903), public domain, hämtade från Wikimedia Commons.
+
 ## Köra manuellt
 
 ```

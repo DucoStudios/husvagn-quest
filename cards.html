@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Familjens Karaktärskort — Husvagnsquesten</title>
+<meta name="description" content="Karaktärskort för hela familjen på husvagnsquesten - tryck för att avslöja egenskaperna." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  :root {
+    --parchment: #f2e6c9;
+    --ink: #3a2b1a;
+    --ink-soft: #6b5638;
+    --gold: #a97b26;
+    --gold-bright: #c9932f;
+    --border: #8a6a3a;
+    --shadow: rgba(58, 43, 26, 0.4);
+    --bg: #1b1410;
+    --leather-1: #5a3a22;
+    --leather-2: #2e1c10;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --parchment: #2a2119;
+      --ink: #e9dcc0;
+      --ink-soft: #c2b190;
+      --gold: #d9a94a;
+      --gold-bright: #eec876;
+      --border: #6b5230;
+      --shadow: rgba(0, 0, 0, 0.6);
+      --bg: #100c09;
+    }
+  }
+  :root[data-theme="dark"] {
+    --parchment: #2a2119; --ink: #e9dcc0; --ink-soft: #c2b190;
+    --gold: #d9a94a; --gold-bright: #eec876; --border: #6b5230;
+    --shadow: rgba(0, 0, 0, 0.6); --bg: #100c09;
+  }
+  :root[data-theme="light"] {
+    --parchment: #f2e6c9; --ink: #3a2b1a; --ink-soft: #6b5638;
+    --gold: #a97b26; --gold-bright: #c9932f; --border: #8a6a3a;
+    --shadow: rgba(58, 43, 26, 0.4); --bg: #1b1410;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    background-image: radial-gradient(ellipse at top, rgba(201,147,47,0.1), transparent 60%);
+    color: var(--ink);
+    font-family: "EB Garamond", Georgia, serif;
+    min-height: 100vh;
+    padding: 2.5rem 1rem 4rem;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+
+  header { text-align: center; margin-bottom: 2.2rem; }
+  h1 {
+    font-family: "Cinzel Decorative", "Cinzel", serif;
+    color: var(--gold-bright);
+    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+    margin: 0 0 0.5rem;
+    text-shadow: 0 2px 12px var(--shadow);
+  }
+  .sub {
+    color: #d8c9a3;
+    font-style: italic;
+    max-width: 60ch;
+    margin: 0 auto;
+  }
+  .back-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--gold-bright);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.6rem;
+    margin-top: 2rem;
+  }
+
+  .card-flip {
+    perspective: 1400px;
+    cursor: pointer;
+    outline: none;
+  }
+  .card-inner {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 5 / 7.2;
+    transition: transform 0.7s cubic-bezier(.4,.15,.2,1);
+    transform-style: preserve-3d;
+  }
+  .card-flip.flipped .card-inner { transform: rotateY(180deg); }
+  .card-flip:focus-visible .card-inner { outline: 3px solid var(--gold-bright); outline-offset: 4px; }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px var(--shadow);
+  }
+
+  /* --- Framsida: läderbokomslag --- */
+  .card-front {
+    background:
+      radial-gradient(circle at 30% 18%, rgba(255,255,255,0.10), transparent 42%),
+      repeating-linear-gradient(135deg, rgba(0,0,0,0.08) 0 3px, transparent 3px 8px),
+      linear-gradient(160deg, var(--leather-1), var(--leather-2) 75%);
+    border: 6px double #8a6a3a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 1rem;
+    text-align: center;
+  }
+  .card-front .emblem {
+    font-size: 1.8rem;
+    color: #d9a94a;
+    opacity: 0.85;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  .card-front .name {
+    font-family: "Cinzel Decorative", serif;
+    font-size: 1.3rem;
+    color: #f0e2bd;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    letter-spacing: 0.03em;
+  }
+  .card-front .hint {
+    font-size: 0.72rem;
+    color: #c2a878;
+    font-style: italic;
+    letter-spacing: 0.03em;
+  }
+
+  /* --- Baksida: quest-kortet --- */
+  .card-back {
+    transform: rotateY(180deg);
+    background: var(--parchment);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+  .card-art {
+    height: 34%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.6rem;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    position: relative;
+  }
+  .card-art .role-tag {
+    position: absolute;
+    bottom: 6px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: "Cinzel", serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+  }
+  .card-body {
+    flex: 1;
+    padding: 0.6rem 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    overflow: hidden;
+  }
+  .card-body .card-name {
+    font-family: "Cinzel", serif;
+    font-weight: 600;
+    font-size: 0.98rem;
+    color: var(--ink);
+    margin: 0;
+  }
+  .card-body .card-class {
+    font-size: 0.72rem;
+    color: var(--gold);
+    font-style: italic;
+    margin: -0.2rem 0 0.1rem;
+  }
+  .card-body .card-desc {
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    line-height: 1.35;
+    margin: 0;
+  }
+  .card-body .card-special {
+    font-size: 0.68rem;
+    color: var(--ink);
+    background: rgba(169,123,38,0.12);
+    border-left: 2px solid var(--gold);
+    padding: 0.3rem 0.4rem;
+    margin: 0.1rem 0;
+    line-height: 1.3;
+  }
+  .stats {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: 3.6rem 1fr 1.8rem;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.62rem;
+    color: var(--ink-soft);
+  }
+  .stat-bar {
+    height: 6px;
+    background: rgba(0,0,0,0.12);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .stat-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    border-radius: 4px;
+  }
+  .stat-val { text-align: right; font-weight: 600; color: var(--ink); }
+
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: #a89571;
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><i class="fa-solid fa-chess-knight"></i> Familjens Karaktärskort</h1>
+    <p class="sub">Fem äventyrare, en gemensam quest. Tryck på ett kort för att slå upp bokomslaget och avslöja egenskaperna.</p>
+    <a class="back-link" href="./index.html">← Tillbaka till questet</a>
+  </header>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>Bödagårdens Husvagnsquest — familjeutgåvan</footer>
+</div>
+
+<script>
+const CHARACTERS = [
+  {
+    name: "Tomas",
+    role: "Familjens far",
+    className: "Vagnjägaren",
+    icon: "fa-solid fa-compass",
+    accent: "#2f4a2f",
+    description: "Ledaren för detta quest. Har ett sjätte sinne för lediga husvagnar och ger aldrig upp en jakt förrän vagnen är bokad.",
+    special: "Särskild förmåga — Vagnsinne: känner på sig när en ny husvagn dyker upp innan mejlet ens hunnit fram.",
+    stats: [
+      { label: "HP", value: 85, max: 100 },
+      { label: "Styrka", value: 7, max: 10 },
+      { label: "Spårsinne", value: 10, max: 10 },
+      { label: "Tur", value: 6, max: 10 }
+    ]
+  },
+  {
+    name: "Annelie",
+    role: "Familjens mor",
+    className: "Strategen",
+    icon: "fa-solid fa-chess-queen",
+    accent: "#6b3fa0",
+    description: "Lägrets kloka strateg. Ser lösningen innan andra ens hunnit formulera problemet, och får alltid bästa platsen i lägret.",
+    special: "Särskild förmåga — Förhandlingskonst: ingen prutar bättre, ingen planerar lugnare.",
+    stats: [
+      { label: "HP", value: 90, max: 100 },
+      { label: "Styrka", value: 5, max: 10 },
+      { label: "Vishet", value: 9, max: 10 },
+      { label: "Karisma", value: 10, max: 10 }
+    ]
+  },
+  {
+    name: "Eira",
+    role: "Äldsta dottern",
+    className: "Väktaren",
+    icon: "fa-solid fa-shield-halved",
+    accent: "#2a5f74",
+    description: "Storasysterns sköld. Håller koll på hela syskonskaran även mitt i kaos, och är den man ropar på när något gått sönder.",
+    special: "Särskild förmåga — Storasysterblick: löser bråk innan de ens brutit ut.",
+    stats: [
+      { label: "HP", value: 80, max: 100 },
+      { label: "Styrka", value: 8, max: 10 },
+      { label: "Försvar", value: 9, max: 10 },
+      { label: "Tålamod", value: 7, max: 10 }
+    ]
+  },
+  {
+    name: "Folke",
+    role: "Mellansonen",
+    className: "Upptäckaren",
+    icon: "fa-solid fa-map",
+    accent: "#a05a1f",
+    description: "Alltid först ut ur bilen. Hittar nya vägar ingen bad om och nya äventyr ingen såg komma.",
+    special: "Särskild förmåga — Genväg: vet alltid ett snabbare, konstigare sätt att komma fram.",
+    stats: [
+      { label: "HP", value: 70, max: 100 },
+      { label: "Styrka", value: 6, max: 10 },
+      { label: "Smidighet", value: 9, max: 10 },
+      { label: "Nyfikenhet", value: 10, max: 10 }
+    ]
+  },
+  {
+    name: "Ivar",
+    role: "Yngsta sonen",
+    className: "Vildingen",
+    icon: "fa-solid fa-dice",
+    accent: "#7a2222",
+    description: "Familjens vilda kort. Ingen vet vad som händer härnäst, minst av allt Ivar själv - och det är precis vad som gör honom farlig i strid.",
+    special: "Särskild förmåga — Oförutsägbar attack: slumpar alltid en ny taktik, mitt i allt.",
+    stats: [
+      { label: "HP", value: 60, max: 100 },
+      { label: "Styrka", value: 5, max: 10 },
+      { label: "Kaosenergi", value: 10, max: 10 },
+      { label: "Tur", value: 9, max: 10 }
+    ]
+  }
+];
+
+function statRow(s) {
+  const pct = Math.round((s.value / s.max) * 100);
+  return `
+    <div class="stat-row">
+      <span>${s.label}</span>
+      <span class="stat-bar"><span class="stat-bar-fill" style="width:${pct}%"></span></span>
+      <span class="stat-val">${s.value}/${s.max}</span>
+    </div>`;
+}
+
+function renderCard(c) {
+  const wrap = document.createElement("div");
+  wrap.className = "card-flip";
+  wrap.tabIndex = 0;
+  wrap.setAttribute("role", "button");
+  wrap.setAttribute("aria-label", `Karaktärskort: ${c.name}. Tryck för att visa/dölja egenskaper.`);
+
+  wrap.innerHTML = `
+    <div class="card-inner">
+      <div class="card-face card-front">
+        <div class="emblem"><i class="${c.icon}"></i></div>
+        <div class="name">${c.name}</div>
+        <div class="hint">Tryck för att avslöja</div>
+      </div>
+      <div class="card-face card-back">
+        <div class="card-art" style="background:${c.accent}">
+          <i class="${c.icon}"></i>
+          <span class="role-tag">${c.role}</span>
+        </div>
+        <div class="card-body">
+          <p class="card-name">${c.name}</p>
+          <p class="card-class">${c.className}</p>
+          <p class="card-desc">${c.description}</p>
+          <p class="card-special">${c.special}</p>
+          <div class="stats">${c.stats.map(statRow).join("")}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const toggle = () => wrap.classList.toggle("flipped");
+  wrap.addEventListener("click", toggle);
+  wrap.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggle();
+    }
+  });
+
+  return wrap;
+}
+
+const grid = document.getElementById("grid");
+CHARACTERS.forEach((c) => grid.appendChild(renderCard(c)));
+</script>
+</body>
+</html>

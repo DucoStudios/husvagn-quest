@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
   :root {
     --parchment: #f2e6c9;
@@ -145,12 +146,33 @@
     margin: 0 auto;
   }
 
-  .scout-note {
+  .scout-lore {
+    max-width: 60ch;
+    margin: 0.8rem auto 0;
+    text-align: left;
+  }
+  .scout-lore summary {
     color: var(--gold);
     font-size: 0.85rem;
-    max-width: 50ch;
-    margin: 0.8rem auto 0;
+    text-align: center;
+    cursor: pointer;
+    list-style: none;
   }
+  .scout-lore summary::-webkit-details-marker { display: none; }
+  .scout-lore summary:hover { color: var(--gold-bright); }
+  .scout-lore-body {
+    margin-top: 0.7rem;
+    padding: 0.9rem 1.1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #d8c9a3;
+    line-height: 1.6;
+  }
+  .scout-lore-body p { margin: 0 0 0.6rem; }
+  .scout-lore-body p:last-child { margin-bottom: 0; }
+  .scout-lore-body strong { color: var(--gold-bright); }
 
   .meta-row {
     display: flex;
@@ -327,7 +349,16 @@
     <div class="banner">⚔ Ett kall från Bödagården, riktat till Tomas ⚔</div>
     <h1>Tomas Husvagnsquest</h1>
     <p class="subtitle">Hör upp, äventyrare Tomas! Questet: erövra en husvagn ledig <strong>vecka 31</strong> innan någon annan äventyrare hinner före. Tavlan visar bara de husvagnar som uttryckligen nämner vecka 31 — de dyker upp, och försvinner, lika snabbt.</p>
-    <p class="scout-note">🕵️ Våra spejare smyger runt lägret dag in och dag ut, dygnet runt, så att vi vet i samma stund något händer.</p>
+    <details class="scout-lore">
+      <summary><i class="fa-solid fa-binoculars"></i> Våra spejare smyger runt lägret dag in och dag ut — klicka för att möta dem</summary>
+      <div class="scout-lore-body">
+        <p>Tre osynliga smygare vaktar Bödagårdens läger, dygnet runt, i alla väder. Ingen har någonsin sett dem — men alla vet att de finns.</p>
+        <p><strong>Korpöga</strong> — ser allt, blinkar aldrig, glömmer ingenting. Lite av en pedant, men exakt den typen du vill ha på vakt.</p>
+        <p><strong>Tystfot</strong> — rör sig utan ett ljud, även över grus. Pratar helst inte i onödan. Bara siffror räknas.</p>
+        <p><strong>Envis-Olle</strong> — ger aldrig upp en post, även om inget händer på veckor. Envisheten är hans enda personlighetsdrag, och han är stolt över den.</p>
+        <p>Tillsammans loggar de varje runda i Spejarloggen. Deras enda svaghet: de kan inte boka en husvagn själva — den äran lämnar de till dig, äventyrare.</p>
+      </div>
+    </details>
     <div class="meta-row">
       <span class="meta-pill">📜 Källa: <a href="https://www.bodagarden.nu/husvagnar-uthyres/" target="_blank" rel="noopener">bodagarden.nu</a></span>
       <span class="meta-pill">Senast ändrad: <span id="last-updated">–</span></span>
@@ -345,7 +376,9 @@
     Tavlan vaktas åt dig automatiskt och du mejlas redan när något ändras — inget du behöver ställa in.<br />
     Länkar leder alltid till den riktiga annonsen på bodagarden.nu — betalning och kontakt sker där, aldrig här.<br />
     Lycka till på jakten, Tomas. / David & Jean-Claude<br />
-    <a href="./log.html">🕵️ Se spejarloggen →</a>
+    <a href="./log.html"><i class="fa-solid fa-binoculars"></i> Se spejarloggen →</a>
+    &nbsp;·&nbsp;
+    <a href="./cards.html"><i class="fa-solid fa-chess-knight"></i> Familjens karaktärskort →</a>
   </footer>
 </div>
 

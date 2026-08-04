@@ -40,3 +40,10 @@ export function nextOccurrenceOfWeekStart(week, from = new Date()) {
   if (start <= from) start = isoWeekStartDate(year + 1, week);
   return start;
 }
+
+// Är `from` mitt inne i årets instans av ISO-vecka `week`?
+export function isDuringWeek(week, from = new Date()) {
+  const start = isoWeekStartDate(from.getUTCFullYear(), week);
+  const end = new Date(start.getTime() + 7 * 24 * 60 * 60 * 1000);
+  return from >= start && from < end;
+}

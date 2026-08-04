@@ -231,6 +231,9 @@
   .quest-link:hover { background: #3d613d; transform: translateY(-1px); }
 
   .empty-state {
+    grid-column: 1 / -1;
+    max-width: 480px;
+    margin: 0 auto;
     text-align: center;
     padding: 3rem 1.5rem;
     border: 1px dashed var(--border);
@@ -302,27 +305,27 @@
 </div>
 
 <script type="module">
-import { matchesWeek, nextOccurrenceOfWeekStart } from "./scripts/weeks.mjs";
+import { matchesWeek, nextOccurrenceOfWeekStart, isDuringWeek } from "./scripts/weeks.mjs";
 
 const TARGET_WEEK = 31;
-const ONE_MONTH_MS = 30 * 24 * 60 * 60 * 1000;
 
 function updateCountdown() {
   const el = document.getElementById("countdown");
   const valueEl = document.getElementById("countdown-value");
   const now = new Date();
+
+  if (isDuringWeek(TARGET_WEEK, now)) {
+    el.hidden = true;
+    return;
+  }
+
   const target = nextOccurrenceOfWeekStart(TARGET_WEEK, now);
   const msLeft = target - now;
-
-  if (msLeft > 0 && msLeft <= ONE_MONTH_MS) {
-    el.hidden = false;
-    const days = Math.floor(msLeft / (24 * 60 * 60 * 1000));
-    const hours = Math.floor((msLeft % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-    const minutes = Math.floor((msLeft % (60 * 60 * 1000)) / (60 * 1000));
-    valueEl.textContent = `${days}d ${hours}t ${minutes}m`;
-  } else {
-    el.hidden = true;
-  }
+  el.hidden = false;
+  const days = Math.floor(msLeft / (24 * 60 * 60 * 1000));
+  const hours = Math.floor((msLeft % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+  const minutes = Math.floor((msLeft % (60 * 60 * 1000)) / (60 * 1000));
+  valueEl.textContent = `${days}d ${hours}t ${minutes}m`;
 }
 updateCountdown();
 setInterval(updateCountdown, 60 * 1000);

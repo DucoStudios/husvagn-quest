@@ -278,12 +278,11 @@ async function main() {
     feedItems: nextFeedItems
   };
 
-  if (changed) {
-    // Filerna skrivs bara vid faktisk förändring - annars skulle
-    // lastUpdated-tidsstämpeln ensam trigga ett git-commit varje körning.
-    await writeFile(DATA_FILE, JSON.stringify(nextState, null, 2) + "\n", "utf8");
-    await writeFile(FEED_FILE, buildFeedXml(nextFeedItems), "utf8");
-  }
+  // Skrivs varje körning (inte bara vid ändring) så att "Senast ändrad" på
+  // sidan speglar senaste skrapningen, inte bara senaste faktiska ändringen.
+  // Nu när skrapningen bara körs en gång i timmen är en commit per körning inte spam.
+  await writeFile(DATA_FILE, JSON.stringify(nextState, null, 2) + "\n", "utf8");
+  await writeFile(FEED_FILE, buildFeedXml(nextFeedItems), "utf8");
 
   // Notis bara om vecka 31-relevanta händelser - sidan visar numera bara
   // sådana träffar, så en notis om övriga skulle bara vara brus för Tomas.
@@ -296,8 +295,7 @@ async function main() {
   console.log(
     `Klart. ${current.size} annonser just nu. ${newIds.length} nya, ${goneIds.length} borttagna.`
   );
-  // GitHub Actions läser denna rad för att veta om något commit-värt hände.
-  console.log(`CHANGED=${changed}`);
+  console.log(`CHANGED=${changed}`); // informativt i Actions-loggen, inte längre styrande
 }
 
 main().catch((err) => {

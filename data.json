@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-06T00:12:54.539Z",
+  "lastUpdated": "2026-08-06T10:49:51.342Z",
   "adverts": [
     {
       "id": "10706",
@@ -9,16 +9,6 @@
       "postedISO": "2026-07-18",
       "postedRaw": "18 juli, 2026",
       "image": "https://www.bodagarden.nu/wp-content/uploads/2026/07/IMG_20230528_160152-310x190.jpg",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
-      "id": "10682",
-      "title": "Fin och praktisk husvagn uthyres v32",
-      "url": "https://www.bodagarden.nu/advert/fin-och-praktisk-husvagn-uthyres-v31/",
-      "plats": "362",
-      "postedISO": "2026-07-01",
-      "postedRaw": "1 juli, 2026",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2026/07/IMG-20260701-WA0019-310x190.jpg",
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
@@ -363,6 +353,14 @@
     }
   ],
   "feedItems": [
+    {
+      "type": "gone",
+      "id": "10682",
+      "title": "Fin och praktisk husvagn uthyres v32",
+      "url": "https://www.bodagarden.nu/advert/fin-och-praktisk-husvagn-uthyres-v31/",
+      "plats": "362",
+      "eventDate": "2026-08-06T10:49:51.342Z"
+    },
     {
       "type": "gone",
       "id": "10147",

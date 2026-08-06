@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-05T20:47:18.387Z",
+  "lastUpdated": "2026-08-06T00:12:54.539Z",
   "adverts": [
     {
       "id": "10706",
@@ -292,16 +292,6 @@
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
-      "id": "10147",
-      "title": "Husvagn med 4 bäddar på Hoppet, plats 222",
-      "url": "https://www.bodagarden.nu/advert/husvagn-med-4-baddar-pa-hoppet-plats-222/",
-      "plats": "222",
-      "postedISO": "2026-01-17",
-      "postedRaw": "17 januari, 2026",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2026/01/IMG_8293-310x190.jpeg",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
       "id": "10126",
       "title": "Husvagn med större förtält nära stranden",
       "url": "https://www.bodagarden.nu/advert/husvagn-med-storre-fortalt-nara-stranden/",
@@ -373,6 +363,14 @@
     }
   ],
   "feedItems": [
+    {
+      "type": "gone",
+      "id": "10147",
+      "title": "Husvagn med 4 bäddar på Hoppet, plats 222",
+      "url": "https://www.bodagarden.nu/advert/husvagn-med-4-baddar-pa-hoppet-plats-222/",
+      "plats": "222",
+      "eventDate": "2026-08-06T00:12:54.539Z"
+    },
     {
       "type": "new",
       "id": "10706",

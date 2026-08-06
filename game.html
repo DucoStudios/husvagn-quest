@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>THE GAME — Husvagnsquesten</title>
+<meta name="description" content="Familjens hemliga uppdragsspel, tillgängligt under vecka 31." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+<style>
+  :root {
+    --parchment: #f2e6c9;
+    --ink: #3a2b1a;
+    --ink-soft: #6b5638;
+    --gold: #a97b26;
+    --gold-bright: #c9932f;
+    --border: #8a6a3a;
+    --shadow: rgba(58, 43, 26, 0.4);
+    --bg: #1b1410;
+    --leather-1: #5a3a22;
+    --leather-2: #2e1c10;
+    --green: #3f9d63;
+    --green-bright: #4fe0a0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --parchment: #2a2119; --ink: #e9dcc0; --ink-soft: #c2b190;
+      --gold: #d9a94a; --gold-bright: #eec876; --border: #6b5230;
+      --shadow: rgba(0, 0, 0, 0.6); --bg: #100c09;
+    }
+  }
+  :root[data-theme="dark"] {
+    --parchment: #2a2119; --ink: #e9dcc0; --ink-soft: #c2b190;
+    --gold: #d9a94a; --gold-bright: #eec876; --border: #6b5230;
+    --shadow: rgba(0, 0, 0, 0.6); --bg: #100c09;
+  }
+  :root[data-theme="light"] {
+    --parchment: #f2e6c9; --ink: #3a2b1a; --ink-soft: #6b5638;
+    --gold: #a97b26; --gold-bright: #c9932f; --border: #8a6a3a;
+    --shadow: rgba(58, 43, 26, 0.4); --bg: #1b1410;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    background-image: radial-gradient(ellipse at top, rgba(201,147,47,0.1), transparent 60%);
+    color: var(--ink);
+    font-family: "EB Garamond", Georgia, serif;
+    min-height: 100vh;
+    padding: 2.5rem 1rem 4rem;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  header { text-align: center; margin-bottom: 1.6rem; }
+  h1 {
+    font-family: "Cinzel Decorative", "Cinzel", serif;
+    color: var(--gold-bright);
+    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+    margin: 0 0 0.5rem;
+    text-shadow: 0 2px 12px var(--shadow);
+    letter-spacing: 0.04em;
+  }
+  .sub {
+    color: #d8c9a3;
+    font-style: italic;
+    max-width: 52ch;
+    margin: 0 auto;
+  }
+  .back-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--gold-bright);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  section { display: none; }
+  section.active { display: block; }
+
+  /* --- Låst vy --- */
+  #lockScreen {
+    text-align: center;
+    background:
+      repeating-linear-gradient(135deg, rgba(217,169,74,0.06) 0 3px, transparent 3px 8px),
+      radial-gradient(circle at 30% 10%, rgba(255,255,255,0.06), transparent 45%),
+      linear-gradient(160deg, #3a3d42, #17181b 78%);
+    border: 3px solid #0c0c0d;
+    border-radius: 18px;
+    padding: 3rem 1.5rem;
+    box-shadow: 0 14px 30px var(--shadow), inset 0 0 0 2px rgba(217,169,74,0.2);
+  }
+  #lockScreen .lock-big {
+    font-size: 3.2rem;
+    color: #d9a94a;
+    text-shadow: 0 0 22px rgba(217,169,74,0.55);
+    margin-bottom: 0.8rem;
+  }
+  #lockScreen h2 {
+    font-family: "Cinzel Decorative", serif;
+    color: #f0e2bd;
+    font-size: 1.4rem;
+    margin: 0 0 0.6rem;
+  }
+  #lockScreen p { color: #c2a878; max-width: 42ch; margin: 0 auto 0.4rem; }
+  #lockScreen .countdown-big {
+    font-family: "Cinzel", serif;
+    color: #d9a94a;
+    font-size: 1rem;
+    margin-top: 1rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* --- Personväljare --- */
+  .person-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.9rem;
+    margin-top: 1.6rem;
+  }
+  .person-btn {
+    background: var(--parchment);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--ink);
+    box-shadow: 0 6px 16px var(--shadow);
+  }
+  .person-btn:hover, .person-btn:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
+  .person-btn .p-icon {
+    width: 2.6rem; height: 2.6rem; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.15rem; color: #f0e2bd;
+    background: radial-gradient(circle at 35% 30%, var(--accent, #8a6a3a), rgba(0,0,0,0.55) 85%);
+    border: 1.5px solid rgba(240,226,189,0.8);
+  }
+  .person-btn .p-name { font-family: "Cinzel", serif; font-weight: 600; }
+  .person-btn .p-role { font-size: 0.68rem; color: var(--ink-soft); font-style: italic; text-align: center; }
+
+  .row-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 0.6rem; margin: 1.6rem 0 0.4rem; flex-wrap: wrap;
+  }
+  .row-head h2 { font-family: "Cinzel", serif; color: var(--gold-bright); font-size: 1.15rem; margin: 0; }
+  .link-btn {
+    background: none; border: 1px solid var(--gold); color: var(--gold-bright);
+    border-radius: 999px; padding: 0.28rem 0.8rem; font-size: 0.82rem;
+    font-family: "EB Garamond", serif; cursor: pointer;
+  }
+  .link-btn:hover { text-decoration: underline; }
+
+  /* --- Uppdragslista --- */
+  .mission-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+  }
+  .mission-card {
+    background: var(--parchment);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 0.8rem 0.9rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    box-shadow: 0 4px 12px var(--shadow);
+  }
+  .mission-card:hover, .mission-card:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
+  .mission-card .m-top { display: flex; align-items: center; gap: 0.5rem; }
+  .mission-card .m-top i { color: var(--gold); font-size: 1.05rem; width: 1.3rem; text-align: center; }
+  .mission-card .m-title { font-family: "Cinzel", serif; font-weight: 600; font-size: 0.95rem; }
+  .mission-card .m-desc { font-size: 0.76rem; color: var(--ink-soft); line-height: 1.35; margin: 0; }
+  .mission-card .m-stat {
+    align-self: flex-start;
+    font-size: 0.68rem;
+    color: var(--gold);
+    background: rgba(169,123,38,0.14);
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+    margin-top: 0.15rem;
+  }
+
+  /* --- Uppdragsdetalj --- */
+  .detail-card {
+    background: var(--parchment);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem 1.2rem;
+    margin-top: 0.8rem;
+    box-shadow: 0 8px 20px var(--shadow);
+    text-align: center;
+  }
+  .detail-card .d-icon { font-size: 2rem; color: var(--gold); margin-bottom: 0.5rem; }
+  .detail-card .d-title { font-family: "Cinzel Decorative", serif; font-size: 1.15rem; margin: 0 0 0.5rem; }
+  .detail-card .d-desc { color: var(--ink-soft); line-height: 1.4; max-width: 42ch; margin: 0 auto 1rem; }
+  .detail-card .d-current { font-size: 0.8rem; color: var(--gold); margin-bottom: 1rem; }
+
+  .tier-row { display: flex; flex-direction: column; gap: 0.5rem; max-width: 360px; margin: 0 auto; }
+  .tier-btn {
+    font-family: "Cinzel", serif; font-size: 0.9rem;
+    background: linear-gradient(160deg, var(--leather-1), var(--leather-2) 85%);
+    color: #f0e2bd; border: 1px solid #8a6a3a; border-radius: 8px;
+    padding: 0.65rem 1rem; cursor: pointer;
+    box-shadow: 0 4px 10px var(--shadow);
+  }
+  .tier-btn:hover, .tier-btn:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
+
+  /* --- Resultat --- */
+  .result-card {
+    background: var(--parchment);
+    border: 2px solid var(--green);
+    border-radius: 14px;
+    padding: 1.5rem 1.2rem;
+    margin-top: 0.8rem;
+    text-align: center;
+    box-shadow: 0 8px 20px var(--shadow);
+  }
+  .result-card .r-icon { font-size: 2rem; color: var(--green-bright); margin-bottom: 0.4rem; }
+  .result-card h2 { font-family: "Cinzel Decorative", serif; font-size: 1.2rem; margin: 0 0 0.3rem; }
+  .result-card p { color: var(--ink-soft); margin: 0 0 1rem; }
+  .result-bar {
+    height: 12px; max-width: 280px; margin: 0 auto 1.2rem;
+    background: rgba(0,0,0,0.14); border-radius: 6px; overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.35); border: 1px solid rgba(58,43,26,0.25);
+  }
+  .result-bar-fill {
+    display: block; height: 100%;
+    background: linear-gradient(180deg, var(--stat-bright, var(--gold-bright)), var(--stat-base, var(--gold)) 60%, var(--stat-deep, #8a6420));
+    border-radius: 6px 0 0 6px;
+    transition: width 0.6s cubic-bezier(.3,.7,.2,1);
+  }
+  .result-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+  .cta-btn {
+    font-family: "Cinzel", serif; font-size: 0.85rem;
+    background: linear-gradient(160deg, var(--gold-bright), var(--gold) 85%);
+    color: #241708; border: none; border-radius: 999px;
+    padding: 0.55rem 1.1rem; cursor: pointer; text-decoration: none;
+    display: inline-block;
+  }
+  .cta-btn.ghost {
+    background: none; color: var(--gold-bright); border: 1px solid var(--gold);
+  }
+
+  /* --- Aktivitetslogg --- */
+  #activityLog { margin-top: 2.4rem; }
+  #activityLog h2 { font-family: "Cinzel", serif; color: var(--gold-bright); font-size: 1rem; text-align: center; margin-bottom: 0.7rem; }
+  .log-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+  .log-list li {
+    font-size: 0.78rem; color: #c2a878;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(138,106,58,0.3);
+    border-radius: 8px; padding: 0.45rem 0.7rem;
+    display: flex; justify-content: space-between; gap: 0.6rem;
+  }
+  .log-list .l-time { color: #8a765a; white-space: nowrap; }
+  .log-empty { text-align: center; color: #6b5638; font-style: italic; font-size: 0.85rem; }
+
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: #a89571;
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><i class="fa-solid fa-lock-open"></i> THE GAME</h1>
+    <p class="sub">Familjens hemliga uppdragsspel. Gör uppdrag under lägret, logga resultatet själva och ärligt — kortet uppdateras direkt.</p>
+    <a class="back-link" href="./cards.html">← Tillbaka till karaktärskorten</a>
+  </header>
+
+  <section id="lockScreen">
+    <div class="lock-big"><i class="fa-solid fa-lock"></i></div>
+    <h2>THE GAME är låst</h2>
+    <p>Det här uppdragsspelet går bara att spela under vecka 31 — innan och efter dess håller det låst, precis som kortet sa.</p>
+    <div class="countdown-big" id="lockCountdown"></div>
+  </section>
+
+  <section id="gameApp">
+
+    <div id="pickCharacterView">
+      <div class="row-head"><h2>Vem är du?</h2></div>
+      <div class="person-grid" id="personGrid"></div>
+    </div>
+
+    <div id="pickMissionView">
+      <div class="row-head">
+        <h2 id="missionHeading">Uppdrag</h2>
+        <button class="link-btn" id="btnChangePerson">Byt person</button>
+      </div>
+      <div class="mission-grid" id="missionGrid"></div>
+    </div>
+
+    <div id="missionDetailView">
+      <div class="row-head">
+        <h2>Uppdrag</h2>
+        <button class="link-btn" id="btnCancelMission">Avbryt</button>
+      </div>
+      <div class="detail-card" id="detailCard"></div>
+    </div>
+
+    <div id="resultView">
+      <div class="result-card" id="resultCard"></div>
+    </div>
+
+    <div id="activityLog">
+      <h2><i class="fa-solid fa-scroll"></i> Senaste uppdragen</h2>
+      <ul class="log-list" id="logList"></ul>
+    </div>
+  </section>
+
+  <footer>Bödagårdens Husvagnsquest — familjeutgåvan</footer>
+</div>
+
+<script type="module">
+import { isDuringWeek, nextOccurrenceOfWeekStart } from "./scripts/weeks.mjs";
+import { CHARACTERS, GEM_COLORS } from "./scripts/characters.mjs";
+import { MISSIONS, RESULT_TIERS, missionsForCharacter } from "./scripts/missions.mjs";
+import { getCurrentValue, applyResult, addLogEntry, getLog } from "./scripts/game-state.mjs";
+
+const GAME_WEEK = 31;
+const now = new Date();
+const unlocked = isDuringWeek(GAME_WEEK, now);
+
+const lockScreen = document.getElementById("lockScreen");
+const gameApp = document.getElementById("gameApp");
+
+if (!unlocked) {
+  lockScreen.classList.add("active");
+  const target = nextOccurrenceOfWeekStart(GAME_WEEK, now);
+  const days = Math.max(1, Math.ceil((target - now) / (24 * 60 * 60 * 1000)));
+  document.getElementById("lockCountdown").textContent = `Öppnas om ${days} dag${days === 1 ? "" : "ar"}`;
+} else {
+  gameApp.classList.add("active");
+  initGame();
+}
+
+function gemVarsFor(label) {
+  const gem = GEM_COLORS[label];
+  return gem
+    ? `--stat-bright:${gem.bright};--stat-base:${gem.base};--stat-deep:${gem.deep};`
+    : "";
+}
+
+function initGame() {
+  const views = {
+    pick: document.getElementById("pickCharacterView"),
+    mission: document.getElementById("pickMissionView"),
+    detail: document.getElementById("missionDetailView"),
+    result: document.getElementById("resultView")
+  };
+  const personGrid = document.getElementById("personGrid");
+  const missionGrid = document.getElementById("missionGrid");
+  const missionHeading = document.getElementById("missionHeading");
+  const detailCard = document.getElementById("detailCard");
+  const resultCard = document.getElementById("resultCard");
+  const logList = document.getElementById("logList");
+
+  const state = { character: null, mission: null };
+
+  function showView(name) {
+    Object.entries(views).forEach(([key, el]) => {
+      el.style.display = key === name ? "" : "none";
+    });
+  }
+
+  function renderPersonGrid() {
+    personGrid.innerHTML = "";
+    CHARACTERS.forEach((c) => {
+      const btn = document.createElement("div");
+      btn.className = "person-btn";
+      btn.tabIndex = 0;
+      btn.setAttribute("role", "button");
+      btn.setAttribute("aria-label", `Spela som ${c.name}`);
+      btn.innerHTML = `
+        <div class="p-icon" style="--accent:${c.accent}"><i class="${c.icon}"></i></div>
+        <div class="p-name">${c.name}</div>
+        <div class="p-role">${c.role}</div>
+      `;
+      const choose = () => {
+        state.character = c;
+        renderMissionGrid();
+        showView("mission");
+      };
+      btn.addEventListener("click", choose);
+      btn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); choose(); }
+      });
+      personGrid.appendChild(btn);
+    });
+  }
+
+  function renderMissionGrid() {
+    const c = state.character;
+    missionHeading.textContent = `Uppdrag för ${c.name}`;
+    missionGrid.innerHTML = "";
+    missionsForCharacter(c).forEach((m) => {
+      const stat = c.stats.find((s) => s.label === m.stat);
+      const current = getCurrentValue(c, m.stat);
+      const card = document.createElement("div");
+      card.className = "mission-card";
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", `Uppdrag: ${m.title}`);
+      card.innerHTML = `
+        <div class="m-top"><i class="${m.icon}"></i><span class="m-title">${m.title}</span></div>
+        <p class="m-desc">${m.desc}</p>
+        <span class="m-stat">${m.stat}: ${current}/${stat.max}</span>
+      `;
+      const choose = () => {
+        state.mission = m;
+        renderDetail();
+        showView("detail");
+      };
+      card.addEventListener("click", choose);
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); choose(); }
+      });
+      missionGrid.appendChild(card);
+    });
+  }
+
+  function renderDetail() {
+    const c = state.character;
+    const m = state.mission;
+    const stat = c.stats.find((s) => s.label === m.stat);
+    const current = getCurrentValue(c, m.stat);
+    detailCard.innerHTML = `
+      <div class="d-icon"><i class="${m.icon}"></i></div>
+      <div class="d-title">${m.title}</div>
+      <p class="d-desc">${m.desc}</p>
+      <p class="d-current">${c.name} — ${m.stat}: ${current}/${stat.max}</p>
+      <p style="font-weight:600;margin-bottom:0.6rem;">Hur gick det?</p>
+      <div class="tier-row" id="tierRow"></div>
+    `;
+    const tierRow = detailCard.querySelector("#tierRow");
+    RESULT_TIERS.forEach((tier, i) => {
+      const btn = document.createElement("button");
+      btn.className = "tier-btn";
+      btn.type = "button";
+      btn.textContent = tier.label;
+      btn.addEventListener("click", () => submitResult(tier, m.points[i]));
+      tierRow.appendChild(btn);
+    });
+  }
+
+  function submitResult(tier, delta) {
+    const c = state.character;
+    const m = state.mission;
+    const stat = c.stats.find((s) => s.label === m.stat);
+    const before = getCurrentValue(c, m.stat);
+    const next = applyResult(c, m.stat, delta);
+    addLogEntry({ name: c.name, mission: m.title, stat: m.stat, value: next, max: stat.max });
+
+    const pct = Math.round((next / stat.max) * 100);
+    const gained = next - before;
+    resultCard.innerHTML = `
+      <div class="r-icon"><i class="fa-solid fa-star"></i></div>
+      <h2>${gained > 0 ? "Grymt jobbat, " + c.name + "!" : "Bra försök, " + c.name + "!"}</h2>
+      <p>${m.stat} ${gained > 0 ? `ökade till ${next}/${stat.max}` : `är kvar på ${next}/${stat.max}`}${gained > 0 ? ` (+${gained})` : ""}</p>
+      <div class="result-bar"><span class="result-bar-fill" style="width:${pct}%;${gemVarsFor(m.stat)}"></span></div>
+      <div class="result-actions">
+        <button class="cta-btn" id="btnAnotherMission" type="button">Gör ett nytt uppdrag</button>
+        <button class="cta-btn ghost" id="btnSwitchPerson" type="button">Byt person</button>
+        <a class="cta-btn ghost" href="./cards.html">Se karaktärskorten →</a>
+      </div>
+    `;
+    resultCard.querySelector("#btnAnotherMission").addEventListener("click", () => {
+      renderMissionGrid();
+      showView("mission");
+    });
+    resultCard.querySelector("#btnSwitchPerson").addEventListener("click", () => {
+      state.character = null;
+      state.mission = null;
+      showView("pick");
+    });
+    renderLog();
+    showView("result");
+  }
+
+  function renderLog() {
+    const entries = getLog(6);
+    if (entries.length === 0) {
+      logList.innerHTML = `<li class="log-empty" style="border:none;background:none;">Inga uppdrag loggade än — bli först!</li>`;
+      return;
+    }
+    logList.innerHTML = entries.map((e) => {
+      const d = new Date(e.ts);
+      const time = d.toLocaleTimeString("sv-SE", { hour: "2-digit", minute: "2-digit" });
+      return `<li><span>${e.name} gjorde <strong>${e.mission}</strong> — ${e.stat} → ${e.value}/${e.max}</span><span class="l-time">${time}</span></li>`;
+    }).join("");
+  }
+
+  document.getElementById("btnChangePerson").addEventListener("click", () => {
+    state.character = null;
+    state.mission = null;
+    showView("pick");
+  });
+  document.getElementById("btnCancelMission").addEventListener("click", () => {
+    state.mission = null;
+    renderMissionGrid();
+    showView("mission");
+  });
+
+  renderPersonGrid();
+  renderLog();
+  showView("pick");
+}
+</script>
+</body>
+</html>

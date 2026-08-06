@@ -320,6 +320,93 @@
   }
   .stat-val { text-align: right; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
 
+  /* --- Hemligt kort: THE GAME --- */
+  @keyframes lockShake {
+    10%, 90% { transform: translate3d(-1px, 0, 0) rotate(-0.4deg); }
+    20%, 80% { transform: translate3d(2px, 0, 0) rotate(0.6deg); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0) rotate(-1deg); }
+    40%, 60% { transform: translate3d(4px, 0, 0) rotate(1deg); }
+  }
+  .game-card.shaking { animation: lockShake 0.45s cubic-bezier(.36,.07,.19,.97); }
+  @media (prefers-reduced-motion: reduce) {
+    .game-card.shaking { animation: none; }
+    .game-card.shaking .lock-icon { opacity: 0.4; }
+  }
+  .game-face {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.2rem 1rem;
+    text-align: center;
+    background:
+      repeating-linear-gradient(135deg, rgba(217,169,74,0.07) 0 3px, transparent 3px 8px),
+      radial-gradient(circle at 30% 15%, rgba(255,255,255,0.08), transparent 45%),
+      linear-gradient(160deg, #3a3d42, #17181b 78%);
+    border: 3px solid #0c0c0d;
+    box-shadow: 0 14px 30px var(--shadow), inset 0 0 0 2px rgba(217,169,74,0.25);
+  }
+  .game-face::before,
+  .game-face::after {
+    content: "ENDAST VECKA 31 · ENDAST VECKA 31 · ";
+    position: absolute;
+    left: -25%;
+    width: 150%;
+    height: 18px;
+    line-height: 18px;
+    font-family: "Cinzel", serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    color: #17181b;
+    white-space: nowrap;
+    overflow: hidden;
+    background: repeating-linear-gradient(45deg, #d9a94a 0 14px, #b8862f 14px 28px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+  .game-face::before { top: 14px; transform: rotate(-4deg); }
+  .game-face::after { bottom: 14px; transform: rotate(-4deg); }
+  .game-face .lock-icon {
+    font-size: 2.3rem;
+    color: #d9a94a;
+    text-shadow: 0 0 18px rgba(217,169,74,0.55), 0 2px 6px rgba(0,0,0,0.6);
+    z-index: 1;
+  }
+  .game-face.is-unlocked .lock-icon {
+    color: #7be89a;
+    text-shadow: 0 0 18px rgba(123,232,154,0.6), 0 2px 6px rgba(0,0,0,0.6);
+  }
+  .game-face .game-title {
+    font-family: "Cinzel Decorative", serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    color: #f0e2bd;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    z-index: 1;
+  }
+  .game-face .game-status {
+    font-family: "Cinzel", serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #d9a94a;
+    z-index: 1;
+  }
+  .game-face.is-unlocked .game-status { color: #7be89a; }
+  .game-face .game-hint {
+    font-size: 0.68rem;
+    color: #a89571;
+    font-style: italic;
+    line-height: 1.4;
+    max-width: 20ch;
+    z-index: 1;
+  }
+
   footer {
     text-align: center;
     margin-top: 3rem;
@@ -341,7 +428,11 @@
   <footer>Bödagårdens Husvagnsquest — familjeutgåvan</footer>
 </div>
 
-<script>
+<script type="module">
+import { isDuringWeek, nextOccurrenceOfWeekStart } from "./scripts/weeks.mjs";
+
+const GAME_WEEK = 31;
+
 const CHARACTERS = [
   {
     name: "Tomas",
@@ -495,8 +586,59 @@ function renderCard(c) {
   return wrap;
 }
 
+function renderGameCard() {
+  const now = new Date();
+  const unlocked = isDuringWeek(GAME_WEEK, now);
+
+  const wrap = document.createElement("div");
+  wrap.className = "card-flip game-card";
+  wrap.id = "game-card";
+  wrap.tabIndex = 0;
+  wrap.setAttribute("role", "button");
+  wrap.setAttribute(
+    "aria-label",
+    `Hemligt kort: THE GAME. ${unlocked ? "Upplåst denna vecka." : "Låst utanför vecka " + GAME_WEEK + "."}`
+  );
+
+  let hint;
+  if (unlocked) {
+    hint = "Upplåst just nu!";
+  } else {
+    const target = nextOccurrenceOfWeekStart(GAME_WEEK, now);
+    const days = Math.max(1, Math.ceil((target - now) / (24 * 60 * 60 * 1000)));
+    hint = `Öppnas om ${days} dag${days === 1 ? "" : "ar"}`;
+  }
+
+  wrap.innerHTML = `
+    <div class="card-inner">
+      <div class="card-face game-face${unlocked ? " is-unlocked" : ""}">
+        <div class="lock-icon"><i class="fa-solid ${unlocked ? "fa-lock-open" : "fa-lock"}"></i></div>
+        <div class="game-title">THE GAME</div>
+        <div class="game-status">${unlocked ? "Upplåst" : "Låst"}</div>
+        <div class="game-hint">Endast tillgänglig vecka ${GAME_WEEK}<br>${hint}</div>
+      </div>
+    </div>
+  `;
+
+  const shake = () => {
+    wrap.classList.remove("shaking");
+    void wrap.offsetWidth;
+    wrap.classList.add("shaking");
+  };
+  wrap.addEventListener("click", shake);
+  wrap.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      shake();
+    }
+  });
+
+  return wrap;
+}
+
 const grid = document.getElementById("grid");
 CHARACTERS.forEach((c) => grid.appendChild(renderCard(c)));
+grid.appendChild(renderGameCard());
 </script>
 </body>
 </html>

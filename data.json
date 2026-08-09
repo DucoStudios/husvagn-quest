@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-08T23:03:40.402Z",
+  "lastUpdated": "2026-08-09T04:46:18.737Z",
   "adverts": [
     {
       "id": "10706",
@@ -19,16 +19,6 @@
       "postedISO": "2026-06-23",
       "postedRaw": "23 juni, 2026",
       "image": "https://www.bodagarden.nu/wp-content/uploads/2026/06/fortalt_framsida-310x190.jpg",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
-      "id": "10663",
-      "title": "Företagare",
-      "url": "https://www.bodagarden.nu/advert/foretagare/",
-      "plats": "220",
-      "postedISO": "2026-06-14",
-      "postedRaw": "14 juni, 2026",
-      "image": null,
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
@@ -179,16 +169,6 @@
       "postedISO": "2026-04-12",
       "postedRaw": "12 april, 2026",
       "image": "https://www.bodagarden.nu/wp-content/uploads/2026/04/Fortalt-utifran-310x190.jpeg",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
-      "id": "10454",
-      "title": "Husvagn uthyres v.26,27,28",
-      "url": "https://www.bodagarden.nu/advert/husvagn-uthyres-v-25-29/",
-      "plats": "223",
-      "postedISO": "2026-04-08",
-      "postedRaw": "8 april, 2026",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2026/04/IMG_5689-310x190.jpeg",
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
@@ -353,6 +333,22 @@
     }
   ],
   "feedItems": [
+    {
+      "type": "gone",
+      "id": "10454",
+      "title": "Husvagn uthyres v.26,27,28",
+      "url": "https://www.bodagarden.nu/advert/husvagn-uthyres-v-25-29/",
+      "plats": "223",
+      "eventDate": "2026-08-09T04:46:18.737Z"
+    },
+    {
+      "type": "gone",
+      "id": "10663",
+      "title": "Företagare",
+      "url": "https://www.bodagarden.nu/advert/foretagare/",
+      "plats": "220",
+      "eventDate": "2026-08-09T04:46:18.737Z"
+    },
     {
       "type": "gone",
       "id": "10682",

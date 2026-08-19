@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-19T18:25:21.520Z",
+  "lastUpdated": "2026-08-19T19:20:08.828Z",
   "adverts": [
     {
       "id": "10706",
@@ -312,16 +312,6 @@
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
-      "id": "9824",
-      "title": "Längtan 703 nära till havet",
-      "url": "https://www.bodagarden.nu/advert/langtan-703-nara-till-havet/",
-      "plats": "703",
-      "postedISO": "2025-12-01",
-      "postedRaw": "1 december, 2025",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2025/12/Screenshot_20251201_202946_Gallery-3-310x190.jpg",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
       "id": "9761",
       "title": "Stor husvagn närmast stranden",
       "url": "https://www.bodagarden.nu/advert/stor-husvagn-narmast-stranden/",
@@ -333,6 +323,14 @@
     }
   ],
   "feedItems": [
+    {
+      "type": "gone",
+      "id": "9824",
+      "title": "Längtan 703 nära till havet",
+      "url": "https://www.bodagarden.nu/advert/langtan-703-nara-till-havet/",
+      "plats": "703",
+      "eventDate": "2026-08-19T19:20:08.828Z"
+    },
     {
       "type": "gone",
       "id": "10454",

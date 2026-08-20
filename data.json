@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-20T21:22:11.793Z",
+  "lastUpdated": "2026-08-20T22:20:56.794Z",
   "adverts": [
     {
       "id": "10706",
@@ -282,16 +282,6 @@
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
-      "id": "9912",
-      "title": "Fröjden plats 525",
-      "url": "https://www.bodagarden.nu/advert/frojden-plats-525-2/",
-      "plats": "525",
-      "postedISO": "2025-12-02",
-      "postedRaw": "2 december, 2025",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2025/12/20250531_124930-2-scaled-310x190-e1764715718148.png",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
       "id": "9761",
       "title": "Stor husvagn närmast stranden",
       "url": "https://www.bodagarden.nu/advert/stor-husvagn-narmast-stranden/",
@@ -303,6 +293,14 @@
     }
   ],
   "feedItems": [
+    {
+      "type": "gone",
+      "id": "9912",
+      "title": "Fröjden plats 525",
+      "url": "https://www.bodagarden.nu/advert/frojden-plats-525-2/",
+      "plats": "525",
+      "eventDate": "2026-08-20T22:20:56.794Z"
+    },
     {
       "type": "gone",
       "id": "10113",

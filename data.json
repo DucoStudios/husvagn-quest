@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-20T15:27:53.787Z",
+  "lastUpdated": "2026-08-20T16:27:35.464Z",
   "adverts": [
     {
       "id": "10706",
@@ -252,16 +252,6 @@
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
-      "id": "10169",
-      "title": "Stor husvagn med inrett förtält",
-      "url": "https://www.bodagarden.nu/advert/stor-husvagn-med-inrett-fortalt/",
-      "plats": "224",
-      "postedISO": "2026-02-01",
-      "postedRaw": "1 februari, 2026",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2026/02/1aa-310x190.png",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
       "id": "10126",
       "title": "Husvagn med större förtält nära stranden",
       "url": "https://www.bodagarden.nu/advert/husvagn-med-storre-fortalt-nara-stranden/",
@@ -323,6 +313,14 @@
     }
   ],
   "feedItems": [
+    {
+      "type": "gone",
+      "id": "10169",
+      "title": "Stor husvagn med inrett förtält",
+      "url": "https://www.bodagarden.nu/advert/stor-husvagn-med-inrett-fortalt/",
+      "plats": "224",
+      "eventDate": "2026-08-20T16:27:35.464Z"
+    },
     {
       "type": "gone",
       "id": "9824",

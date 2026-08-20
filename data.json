@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-20T16:27:35.464Z",
+  "lastUpdated": "2026-08-20T17:23:23.536Z",
   "adverts": [
     {
       "id": "10706",
@@ -262,16 +262,6 @@
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
-      "id": "10113",
-      "title": "Fin husvagn närmast stranden",
-      "url": "https://www.bodagarden.nu/advert/fin-husvagn-narmast-stranden/",
-      "plats": "359",
-      "postedISO": "2026-01-01",
-      "postedRaw": "1 januari, 2026",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2026/01/7022086A-4216-406C-B946-4FCD11656C9B-310x190.jpeg",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
       "id": "10092",
       "title": "Husvagn uthyres närmast stranden",
       "url": "https://www.bodagarden.nu/advert/husvagn-uthyres/",
@@ -313,6 +303,14 @@
     }
   ],
   "feedItems": [
+    {
+      "type": "gone",
+      "id": "10113",
+      "title": "Fin husvagn närmast stranden",
+      "url": "https://www.bodagarden.nu/advert/fin-husvagn-narmast-stranden/",
+      "plats": "359",
+      "eventDate": "2026-08-20T17:23:23.536Z"
+    },
     {
       "type": "gone",
       "id": "10169",

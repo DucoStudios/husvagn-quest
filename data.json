@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-21T16:25:44.222Z",
+  "lastUpdated": "2026-08-21T17:22:39.760Z",
   "adverts": [
     {
       "id": "10706",
@@ -232,16 +232,6 @@
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
-      "id": "10223",
-      "title": "Stor och rymlig vagn uthyres",
-      "url": "https://www.bodagarden.nu/advert/stor-och-rymlig-vagn-uthyres/",
-      "plats": "516",
-      "postedISO": "2026-02-09",
-      "postedRaw": "9 februari, 2026",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2026/02/IMG_5645-310x190.jpeg",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
       "id": "10212",
       "title": "Nära till allt",
       "url": "https://www.bodagarden.nu/advert/nara-till-allt/",
@@ -293,6 +283,14 @@
     }
   ],
   "feedItems": [
+    {
+      "type": "gone",
+      "id": "10223",
+      "title": "Stor och rymlig vagn uthyres",
+      "url": "https://www.bodagarden.nu/advert/stor-och-rymlig-vagn-uthyres/",
+      "plats": "516",
+      "eventDate": "2026-08-21T17:22:39.760Z"
+    },
     {
       "type": "gone",
       "id": "9912",

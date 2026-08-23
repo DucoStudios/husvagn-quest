@@ -3228,5 +3228,15 @@
     "weekMatchGoneCount": 0,
     "notified": false,
     "bootstrap": false
+  },
+  {
+    "at": "2026-08-23T19:18:26.964Z",
+    "totalAdverts": 27,
+    "newCount": 0,
+    "goneCount": 1,
+    "weekMatchNewCount": 0,
+    "weekMatchGoneCount": 0,
+    "notified": false,
+    "bootstrap": false
   }
 ]

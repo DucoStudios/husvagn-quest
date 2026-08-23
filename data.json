@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-23T18:20:32.313Z",
+  "lastUpdated": "2026-08-23T19:18:26.964Z",
   "adverts": [
     {
       "id": "10706",
@@ -270,19 +270,17 @@
       "postedRaw": "22 december, 2025",
       "image": "https://www.bodagarden.nu/wp-content/uploads/2025/12/Bild-1-A-310x190.jpg",
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
+    }
+  ],
+  "feedItems": [
     {
+      "type": "gone",
       "id": "9761",
       "title": "Stor husvagn närmast stranden",
       "url": "https://www.bodagarden.nu/advert/stor-husvagn-narmast-stranden/",
       "plats": "343",
-      "postedISO": "2025-11-04",
-      "postedRaw": "4 november, 2025",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2025/11/IMG_0823-310x190.jpg",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    }
-  ],
-  "feedItems": [
+      "eventDate": "2026-08-23T19:18:26.964Z"
+    },
     {
       "type": "gone",
       "id": "10223",

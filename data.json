@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-25T17:25:54.678Z",
+  "lastUpdated": "2026-08-25T18:31:42.955Z",
   "adverts": [
     {
       "id": "10706",
@@ -242,16 +242,6 @@
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
-      "id": "10126",
-      "title": "Husvagn med större förtält nära stranden",
-      "url": "https://www.bodagarden.nu/advert/husvagn-med-storre-fortalt-nara-stranden/",
-      "plats": "358",
-      "postedISO": "2026-01-06",
-      "postedRaw": "6 januari, 2026",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2026/01/20250906_091037-310x190.jpg",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
       "id": "10092",
       "title": "Husvagn uthyres närmast stranden",
       "url": "https://www.bodagarden.nu/advert/husvagn-uthyres/",
@@ -273,6 +263,14 @@
     }
   ],
   "feedItems": [
+    {
+      "type": "gone",
+      "id": "10126",
+      "title": "Husvagn med större förtält nära stranden",
+      "url": "https://www.bodagarden.nu/advert/husvagn-med-storre-fortalt-nara-stranden/",
+      "plats": "358",
+      "eventDate": "2026-08-25T18:31:42.955Z"
+    },
     {
       "type": "gone",
       "id": "9761",

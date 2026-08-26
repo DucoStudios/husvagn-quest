@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-08-26T16:13:08.447Z",
+  "lastUpdated": "2026-08-26T18:54:14.300Z",
   "adverts": [
     {
       "id": "10706",
@@ -232,16 +232,6 @@
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
-      "id": "10212",
-      "title": "Nära till allt",
-      "url": "https://www.bodagarden.nu/advert/nara-till-allt/",
-      "plats": "240",
-      "postedISO": "2026-02-07",
-      "postedRaw": "7 februari, 2026",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2026/02/IMG_5014-1-310x190.jpeg",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
       "id": "10092",
       "title": "Husvagn uthyres närmast stranden",
       "url": "https://www.bodagarden.nu/advert/husvagn-uthyres/",
@@ -263,6 +253,14 @@
     }
   ],
   "feedItems": [
+    {
+      "type": "gone",
+      "id": "10212",
+      "title": "Nära till allt",
+      "url": "https://www.bodagarden.nu/advert/nara-till-allt/",
+      "plats": "240",
+      "eventDate": "2026-08-26T18:54:14.300Z"
+    },
     {
       "type": "gone",
       "id": "10126",

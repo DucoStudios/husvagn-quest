@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-04T10:23:04.116Z",
+  "lastUpdated": "2026-09-04T14:42:22.556Z",
   "adverts": [
     {
       "id": "10706",
@@ -222,16 +222,6 @@
       "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
     },
     {
-      "id": "10251",
-      "title": "Fin barnkammarvagn",
-      "url": "https://www.bodagarden.nu/advert/fin-barnkammarvagn/",
-      "plats": "104",
-      "postedISO": "2026-02-16",
-      "postedRaw": "16 februari, 2026",
-      "image": "https://www.bodagarden.nu/wp-content/uploads/2026/02/thumbnail_IMG_4939-310x190.jpg",
-      "firstSeenByScraper": "2026-08-04T13:44:14.188Z"
-    },
-    {
       "id": "10092",
       "title": "Husvagn uthyres närmast stranden",
       "url": "https://www.bodagarden.nu/advert/husvagn-uthyres/",
@@ -253,6 +243,14 @@
     }
   ],
   "feedItems": [
+    {
+      "type": "gone",
+      "id": "10251",
+      "title": "Fin barnkammarvagn",
+      "url": "https://www.bodagarden.nu/advert/fin-barnkammarvagn/",
+      "plats": "104",
+      "eventDate": "2026-09-04T14:42:22.556Z"
+    },
     {
       "type": "gone",
       "id": "10212",

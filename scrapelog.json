@@ -1,55 +1,5 @@
 [
   {
-    "at": "2026-08-25T11:21:41.278Z",
-    "totalAdverts": 27,
-    "newCount": 0,
-    "goneCount": 0,
-    "weekMatchNewCount": 0,
-    "weekMatchGoneCount": 0,
-    "notified": false,
-    "bootstrap": false
-  },
-  {
-    "at": "2026-08-25T12:36:28.550Z",
-    "totalAdverts": 27,
-    "newCount": 0,
-    "goneCount": 0,
-    "weekMatchNewCount": 0,
-    "weekMatchGoneCount": 0,
-    "notified": false,
-    "bootstrap": false
-  },
-  {
-    "at": "2026-08-25T13:43:28.251Z",
-    "totalAdverts": 27,
-    "newCount": 0,
-    "goneCount": 0,
-    "weekMatchNewCount": 0,
-    "weekMatchGoneCount": 0,
-    "notified": false,
-    "bootstrap": false
-  },
-  {
-    "at": "2026-08-25T14:39:04.904Z",
-    "totalAdverts": 27,
-    "newCount": 0,
-    "goneCount": 0,
-    "weekMatchNewCount": 0,
-    "weekMatchGoneCount": 0,
-    "notified": false,
-    "bootstrap": false
-  },
-  {
-    "at": "2026-08-25T15:36:35.278Z",
-    "totalAdverts": 27,
-    "newCount": 0,
-    "goneCount": 0,
-    "weekMatchNewCount": 0,
-    "weekMatchGoneCount": 0,
-    "notified": false,
-    "bootstrap": false
-  },
-  {
     "at": "2026-08-25T16:29:39.198Z",
     "totalAdverts": 27,
     "newCount": 0,
@@ -1991,6 +1941,16 @@
   },
   {
     "at": "2026-09-24T10:57:13.972Z",
+    "totalAdverts": 0,
+    "newCount": 0,
+    "goneCount": 0,
+    "weekMatchNewCount": 0,
+    "weekMatchGoneCount": 0,
+    "notified": false,
+    "bootstrap": false
+  },
+  {
+    "at": "2026-09-24T15:42:59.022Z",
     "totalAdverts": 0,
     "newCount": 0,
     "goneCount": 0,

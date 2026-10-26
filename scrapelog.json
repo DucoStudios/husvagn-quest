@@ -1,15 +1,5 @@
 [
   {
-    "at": "2026-09-26T00:20:14.728Z",
-    "totalAdverts": 0,
-    "newCount": 0,
-    "goneCount": 0,
-    "weekMatchNewCount": 0,
-    "weekMatchGoneCount": 0,
-    "notified": false,
-    "bootstrap": false
-  },
-  {
     "at": "2026-09-26T05:45:15.291Z",
     "totalAdverts": 0,
     "newCount": 0,
@@ -1521,6 +1511,16 @@
   },
   {
     "at": "2026-10-25T23:42:51.438Z",
+    "totalAdverts": 0,
+    "newCount": 0,
+    "goneCount": 0,
+    "weekMatchNewCount": 0,
+    "weekMatchGoneCount": 0,
+    "notified": false,
+    "bootstrap": false
+  },
+  {
+    "at": "2026-10-26T02:46:52.974Z",
     "totalAdverts": 0,
     "newCount": 0,
     "goneCount": 0,

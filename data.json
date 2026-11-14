@@ -1,7 +1,26 @@
 {
-  "lastUpdated": "2026-11-13T20:14:04.157Z",
-  "adverts": [],
+  "lastUpdated": "2026-11-14T01:11:21.194Z",
+  "adverts": [
+    {
+      "id": "10774",
+      "title": "Stor husvagn närmast strandängarna plats 343",
+      "url": "https://www.bodagarden.nu/advert/stor-husvagn-narmast-strandangarna-plats-343/",
+      "plats": "343",
+      "postedISO": "2026-11-13",
+      "postedRaw": "13 november, 2026",
+      "image": "https://www.bodagarden.nu/wp-content/uploads/2026/11/IMG_1923-2-310x190.jpg",
+      "firstSeenByScraper": "2026-11-14T01:11:21.194Z"
+    }
+  ],
   "feedItems": [
+    {
+      "type": "new",
+      "id": "10774",
+      "title": "Stor husvagn närmast strandängarna plats 343",
+      "url": "https://www.bodagarden.nu/advert/stor-husvagn-narmast-strandangarna-plats-343/",
+      "plats": "343",
+      "eventDate": "2026-11-14T01:11:21.194Z"
+    },
     {
       "type": "gone",
       "id": "10075",
@@ -472,14 +491,6 @@
       "title": "Stor barnkammarvagn uthyres",
       "url": "https://www.bodagarden.nu/advert/stor-barnkammarvagn-uthyres/",
       "plats": "606",
-      "eventDate": "2026-08-04T13:44:14.188Z"
-    },
-    {
-      "type": "new",
-      "id": "10303",
-      "title": "Välkommen att hyra vår semesterpärla",
-      "url": "https://www.bodagarden.nu/advert/valkommen-att-hyra-var-semesterparla/",
-      "plats": "313",
       "eventDate": "2026-08-04T13:44:14.188Z"
     }
   ]

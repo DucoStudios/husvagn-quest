@@ -6,7 +6,14 @@
     <atom:link href="https://ducostudios.github.io/husvagn-quest/feed.xml" rel="self" type="application/rss+xml" />
     <description>Notiser när husvagnar blir lediga eller uthyrda på Bödagårdens Camping, Öland.</description>
     <language>sv</language>
-    <lastBuildDate>Fri, 13 Nov 2026 20:14:04 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 14 Nov 2026 01:11:21 GMT</lastBuildDate>
+    <item>
+      <title>Ny husvagn tillgänglig: Stor husvagn närmast strandängarna plats 343 (plats 343)</title>
+      <link>https://www.bodagarden.nu/advert/stor-husvagn-narmast-strandangarna-plats-343/</link>
+      <guid isPermaLink="false">10774-new-2026-11-14T01:11:21.194Z</guid>
+      <pubDate>Sat, 14 Nov 2026 01:11:21 GMT</pubDate>
+      <description>En ny husvagn dök upp på Bödagårdens Camping: &quot;Stor husvagn närmast strandängarna plats 343&quot;, plats 343. https://www.bodagarden.nu/advert/stor-husvagn-narmast-strandangarna-plats-343/</description>
+    </item>
     <item>
       <title>Husvagn ej längre tillgänglig: Lyckan plats 377 (plats 377)</title>
       <link>https://www.bodagarden.nu/advert/lyckan-plats-377/</link>
@@ -419,13 +426,6 @@
       <guid isPermaLink="false">10334-new-2026-08-04T13:44:14.188Z</guid>
       <pubDate>Tue, 04 Aug 2026 13:44:14 GMT</pubDate>
       <description>En ny husvagn dök upp på Bödagårdens Camping: &quot;Stor barnkammarvagn uthyres&quot;, plats 606. https://www.bodagarden.nu/advert/stor-barnkammarvagn-uthyres/</description>
-    </item>
-    <item>
-      <title>Ny husvagn tillgänglig: Välkommen att hyra vår semesterpärla (plats 313)</title>
-      <link>https://www.bodagarden.nu/advert/valkommen-att-hyra-var-semesterparla/</link>
-      <guid isPermaLink="false">10303-new-2026-08-04T13:44:14.188Z</guid>
-      <pubDate>Tue, 04 Aug 2026 13:44:14 GMT</pubDate>
-      <description>En ny husvagn dök upp på Bödagårdens Camping: &quot;Välkommen att hyra vår semesterpärla&quot;, plats 313. https://www.bodagarden.nu/advert/valkommen-att-hyra-var-semesterparla/</description>
     </item>
   </channel>
 </rss>
